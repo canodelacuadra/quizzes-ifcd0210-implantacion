@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quizzes IFCD0210 · Implantación de aplicaciones web</title>
-<meta name="description" content="Quizzes interactivos de autoevaluación del módulo de implantación de aplicaciones web (IFCD0210): fundamentos de la Web, WordPress, WooCommerce y despliegue con FTP, FileZilla, Netlify y GitHub Pages. Preguntas tipo test con feedback inmediato.">
+<meta name="description" content="Quizzes interactivos de autoevaluación del módulo de implantación de aplicaciones web (IFCD0210): fundamentos de la Web, WordPress, WooCommerce, despliegue con FTP, FileZilla, Netlify y GitHub Pages, y SEO. Preguntas tipo test con feedback inmediato.">
 <meta name="theme-color" content="#2563eb">
 <style>
 :root{
   --b50:#eff6ff;--b100:#dbeafe;--b200:#bfdbfe;--b300:#93c5fd;--b400:#60a5fa;--b500:#3b82f6;--b600:#2563eb;--b700:#1d4ed8;--b800:#1e40af;
   --s50:#f8fafc;--s100:#f1f5f9;--s200:#e2e8f0;--s300:#cbd5e1;--s400:#94a3b8;--s500:#64748b;--s600:#475569;--s700:#334155;--s800:#1e293b;--s900:#0f172a;
   --a50:#fffbeb;--a200:#fde68a;--a500:#f59e0b;--a700:#b45309;
+  --c50:#ecfeff;--c100:#cffafe;--c300:#67e8f9;--c600:#0891b2;--c700:#0e7490;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--s900);background:#fff;-webkit-font-smoothing:antialiased}
@@ -56,6 +57,12 @@ h1 .acento{color:var(--b600)}
 .flecha{display:flex;height:2rem;width:2rem;align-items:center;justify-content:center;border-radius:999px;background:var(--b600);color:#fff;transition:transform .2s}
 .quiz:hover .flecha{transform:translateX(3px)}
 .flecha svg{width:1rem;height:1rem}
+.quiz--seo::before{background:linear-gradient(90deg,var(--c600),var(--c700))}
+.quiz--seo .icono-quiz{background:var(--c50);color:var(--c700);border-color:var(--c100)}
+.quiz--seo .etiqueta-azul{background:var(--c50);color:var(--c700)}
+.quiz--seo .quiz-pie span{color:var(--c700)}
+.quiz--seo .flecha{background:var(--c600)}
+.quiz--seo:hover{border-color:var(--c300)}
 .nota{max-width:52rem;margin:2rem auto 0;border:1px solid var(--b100);background:rgba(239,246,255,.65);border-radius:1rem;padding:1rem 1.1rem;display:flex;gap:.75rem;align-items:flex-start}
 .nota svg{flex:0 0 auto;width:1.1rem;height:1.1rem;color:var(--b600);margin-top:.1rem}
 .nota p{font-size:.82rem;line-height:1.55;color:var(--s600)}
@@ -95,11 +102,11 @@ h1 .acento{color:var(--b600)}
     <section class="hero" aria-labelledby="titulo-principal">
       <p class="ceja">IFCD0210 · Módulo de implantación de aplicaciones web</p>
       <h1 id="titulo-principal">Pon a prueba lo que sabes de <span class="acento">implantación web</span></h1>
-      <p class="intro">Quizzes breves para repasar los fundamentos de la Web, WordPress, WooCommerce y el despliegue de aplicaciones. Sin instalar nada y con la explicación de cada respuesta.</p>
+      <p class="intro">Quizzes breves para repasar los fundamentos de la Web, WordPress, WooCommerce, el despliegue de aplicaciones y SEO. Sin instalar nada y con la explicación de cada respuesta.</p>
       <div class="estadisticas" aria-label="Resumen de los quizzes">
-        <div class="estadistica"><strong>4</strong><span>secciones</span></div>
-        <div class="estadistica"><strong>16</strong><span>quizzes disponibles</span></div>
-        <div class="estadistica"><strong>285</strong><span>preguntas tipo test</span></div>
+        <div class="estadistica"><strong>5</strong><span>secciones</span></div>
+        <div class="estadistica"><strong>17</strong><span>quizzes disponibles</span></div>
+        <div class="estadistica"><strong>305</strong><span>preguntas tipo test</span></div>
       </div>
     </section>
 
@@ -192,6 +199,29 @@ h1 .acento{color:var(--b600)}
           </div>
           <div class="quiz-pie">
             <span>Entrar en Despliegue</span>
+            <span class="flecha" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="quiz quiz--seo" href="seo/index.html">
+          <div class="quiz-cabecera">
+            <span class="icono-quiz" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <div>
+              <h3>SEO</h3>
+              <p>Conceptos básicos de posicionamiento en buscadores: rastreo, indexación, keywords, on-page, técnico y enlaces.</p>
+            </div>
+          </div>
+          <div class="etiquetas">
+            <span class="etiqueta etiqueta-azul">1 quiz</span>
+            <span class="etiqueta">20 preguntas</span>
+            <span class="etiqueta">Posicionamiento</span>
+          </div>
+          <div class="quiz-pie">
+            <span>Entrar en SEO</span>
             <span class="flecha" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </span>

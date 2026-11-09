@@ -10,7 +10,8 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 | WordPress | 7 | 120 |
 | WooCommerce | 5 | 98 |
 | Despliegue | 1 | 15 |
-| **Total** | **16** | **285** |
+| SEO | 1 | 20 |
+| **Total** | **17** | **305** |
 
 ### Fundamentos web
 - Conceptos fundamentales de la Web
@@ -38,6 +39,11 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 - Próximamente: Publicar en Netlify
 - Próximamente: Publicar en GitHub Pages
 
+### SEO
+- Conceptos básicos de SEO
+
+Próximos temas previstos: SEO en páginas estáticas, SEO en WordPress (SSR), SEO para redes sociales y SEO en WooCommerce.
+
 ## Estructura del proyecto
 
 ```
@@ -49,12 +55,15 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 │   └── datos/            # Bancos de preguntas
 ├── wordpress/            # Quizzes de WordPress
 ├── woocommerce/          # Quizzes de WooCommerce
-└── despliegue/           # Quizzes de despliegue
+├── despliegue/           # Quizzes de despliegue
+│   ├── assets/
+│   └── datos/
+└── seo/                  # Quizzes de SEO
     ├── assets/
     └── datos/
 ```
 
-Los quizzes de **Fundamentos** y **Despliegue** usan un motor compartido (`assets/quiz.css` y `assets/quiz.js`) y cargan las preguntas desde archivos de `datos/`. Los quizzes de **WordPress** y **WooCommerce** son páginas HTML autocontenidas.
+Los quizzes de **Fundamentos**, **Despliegue** y **SEO** usan un motor compartido (`assets/quiz.css` y `assets/quiz.js`) y cargan las preguntas desde archivos de `datos/`. Los quizzes de **WordPress** y **WooCommerce** son páginas HTML autocontenidas.
 
 ## Cómo usarlo
 
