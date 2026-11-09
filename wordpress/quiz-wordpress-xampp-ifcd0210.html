@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz · WordPress sobre XAMPP · IFCD0210 Módulo 3</title>
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+:root{
+  --azul:#2271b1; --azul-osc:#135e96; --oscuro:#1d2327; --gris:#f0f0f1;
+  --borde:#c3c4c7; --verde:#00a32a; --verde-fondo:#edfaef; --rojo:#d63638; --rojo-fondo:#fcf0f1;
+  --texto:#1d2327; --apagado:#646970;
+}
+body{margin:0;background:var(--gris);color:var(--texto);line-height:1.5;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif}
+.barra{background:var(--oscuro);color:#f0f0f1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 22px}
+.marca{display:flex;align-items:center;gap:10px;font-size:15px}
+.logo{display:inline-flex;width:24px;height:24px;border:2px solid #f0f0f1;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none}
+.etiqueta{font-size:13px;color:#c3c4c7;text-align:right}
+main{max-width:780px;margin:0 auto;padding:28px 18px 40px}
+.tarjeta{background:#fff;border:1px solid var(--borde);border-radius:8px;box-shadow:0 1px 1px rgba(0,0,0,.04);padding:30px 34px}
+h1{font-size:24px;margin:0 0 10px}
+h2{font-size:20px;margin:14px 0 18px;line-height:1.35}
+p{margin:8px 0}
+.intro{color:var(--apagado)}
+.pildora{display:inline-block;background:var(--gris);border:1px solid var(--borde);border-radius:999px;padding:3px 12px;font-size:13px;color:var(--apagado);margin-bottom:6px}
+.opcion{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;margin:10px 0;padding:13px 16px;background:#fff;border:1px solid var(--borde);border-radius:6px;font:inherit;font-size:16px;cursor:pointer;color:var(--texto)}
+.opcion:hover:not(:disabled){border-color:var(--azul)}
+.opcion:disabled{cursor:default}
+.letra{flex:none;display:inline-flex;width:24px;height:24px;border-radius:50%;border:1px solid var(--borde);align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--apagado);margin-top:1px}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-fondo)}
+.opcion.correcta .letra{border-color:var(--verde);color:var(--verde)}
+.opcion.fallada{border-color:var(--rojo);background:var(--rojo-fondo)}
+.opcion.fallada .letra{border-color:var(--rojo);color:var(--rojo)}
+.opcion.atenuada{opacity:.55}
+.feedback{margin-top:18px;padding:14px 18px;border-radius:6px;border-left:5px solid;font-size:15.5px}
+.feedback.ok{border-color:var(--verde);background:var(--verde-fondo)}
+.feedback.ko{border-color:var(--rojo);background:var(--rojo-fondo)}
+.boton{display:inline-block;background:var(--azul);border:1px solid var(--azul);color:#fff;padding:9px 20px;border-radius:4px;font:inherit;font-size:15px;cursor:pointer}
+.boton:hover{background:var(--azul-osc)}
+.boton:disabled{opacity:.6;cursor:default}
+.derecha{display:flex;justify-content:flex-end;margin-top:20px}
+.nota{font-size:54px;font-weight:700;color:var(--azul);line-height:1.1;margin:6px 0}
+.nota small{font-size:22px;color:var(--apagado);font-weight:400}
+.mensaje{font-size:17px;margin:4px 0 2px}
+.aciertos{color:var(--apagado);font-size:15px}
+.resena{margin-top:26px;border-top:1px solid var(--borde);padding-top:8px}
+.item{border:1px solid var(--borde);border-left-width:5px;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:15px}
+.item.ok{border-left-color:var(--verde)}
+.item.ko{border-left-color:var(--rojo)}
+.item .pregunta{font-weight:600;margin-bottom:4px}
+.resp-ok{color:var(--verde)}
+.resp-ko{color:var(--rojo)}
+.explicacion{color:var(--apagado);font-size:14px;margin-top:6px}
+footer{max-width:780px;margin:0 auto;padding:0 18px 34px;color:var(--apagado);font-size:13px;text-align:center}
+@media (max-width:600px){.tarjeta{padding:22px 18px}.nota{font-size:44px}}
+</style>
+</head>
+<body>
+<div class="barra">
+  <div class="marca"><span class="logo">W</span><span><strong>Quiz de repaso</strong> · WordPress sobre XAMPP</span></div>
+  <div class="etiqueta">IFCD0210 · Módulo 3</div>
+</div>
+<main>
+  <section id="inicio" class="tarjeta">
+    <h1>Primer vistazo a WordPress</h1>
+    <p class="intro">15 preguntas para repasar lo que hemos dado: el entorno XAMPP, la instalación de WordPress en la carpeta <strong>empresa</strong> y el acceso a la parte pública, la parte privada y phpMyAdmin mediante <strong>localhost</strong>.</p>
+    <p class="intro">No hay tiempo límite. Tras cada respuesta verás la explicación y, al final, tu nota sobre 10 con la revisión completa. Puedes repetirlo tantas veces como quieras.</p>
+    <div class="derecha"><button id="boton-empezar" class="boton" type="button">Empezar el quiz</button></div>
+  </section>
+
+  <section id="quiz" class="tarjeta" hidden>
+    <span class="pildora" id="contador">Pregunta 1 de 15</span>
+    <h2 id="enunciado"></h2>
+    <div id="opciones"></div>
+    <div id="feedback" class="feedback" hidden></div>
+    <div class="derecha"><button id="boton-siguiente" class="boton" type="button" hidden>Siguiente</button></div>
+  </section>
+
+  <section id="resultados" class="tarjeta" hidden>
+    <h1>Resultado</h1>
+    <div class="nota" id="nota"></div>
+    <p class="mensaje" id="mensaje"></p>
+    <p class="aciertos" id="aciertos"></p>
+    <div class="resena" id="resena"></div>
+    <div class="derecha"><button id="boton-repetir" class="boton" type="button">Repetir el quiz</button></div>
+  </section>
+</main>
+<footer>Actividad de refuerzo · IFCD0210 · Módulo 3 · WordPress sobre XAMPP</footer>
+<script>
+const PREGUNTAS = [
+  { q: "¿Qué significan las siglas de XAMPP?",
+    opciones: ["XML, Apache, MySQL, Python, Perl", "Cross-platform, Apache, MySQL/MariaDB, PHP, Perl", "eXternal, AppServ, MariaDB, PHP, PostgreSQL", "Xerox, Apache, MongoDB, PHP, Perl"],
+    correcta: 1,
+    explicacion: "La X indica que funciona en cualquier sistema operativo (Windows, Linux o macOS). XAMPP reúne en un solo paquete el servidor web (Apache), la base de datos (MySQL/MariaDB) y el lenguaje PHP." },
+  { q: "En XAMPP, ¿cuál es el papel de Apache?",
+    opciones: ["Es el sistema gestor de la base de datos de WordPress", "Es el lenguaje de programación en el que está escrito WordPress", "Es el servidor web: recibe las peticiones del navegador y sirve las páginas", "Es el panel para gestionar los usuarios de WordPress"],
+    correcta: 2,
+    explicacion: "MySQL/MariaDB guarda los datos, PHP es el lenguaje con el que está hecho WordPress y Apache es el servidor que atiende las peticiones del navegador y le devuelve las páginas." },
+  { q: "¿Cómo sabes desde el Panel de Control de XAMPP que Apache y MySQL están funcionando?",
+    opciones: ["Sus módulos aparecen resaltados en verde con la etiqueta “Running”", "Se abre WordPress automáticamente", "Los módulos desaparecen de la lista", "El ordenador emite un pitido de confirmación"],
+    correcta: 0,
+    explicacion: "Cada módulo iniciado se pone en verde y muestra el puerto que utiliza: Apache usa el 80 y MySQL/MariaDB el 3306, normalmente." },
+  { q: "¿Qué es localhost?",
+    opciones: ["Una web de Internet para descargar programas gratuitos", "El servidor oficial de WordPress", "Un servicio de hosting gratuito", "El nombre con el que tu ordenador se refiere a sí mismo: el servidor está en tu propia máquina"],
+    correcta: 3,
+    explicacion: "localhost (127.0.0.1) apunta a tu propio equipo. Al escribir http://localhost el navegador se comunica con el Apache de tu XAMPP, no con una web de Internet." },
+  { q: "¿En qué carpeta de XAMPP hemos descomprimido WordPress para poder verlo desde el navegador?",
+    opciones: ["C:\\xampp\\mysql\\data", "C:\\Windows\\System32", "C:\\xampp\\htdocs", "C:\\xampp\\phpMyAdmin"],
+    correcta: 2,
+    explicacion: "htdocs es la carpeta web de Apache. Como WordPress está dentro de htdocs/empresa, el sitio se visita en http://localhost/empresa." },
+  { q: "¿Desde qué web se descarga WordPress?",
+    opciones: ["wordpress.com", "wordpress.org", "wordpress.es", "microsoft.com/wordpress"],
+    correcta: 1,
+    explicacion: "wordpress.org es la web oficial del software gratuito que instalamos en nuestro servidor. wordpress.com es un servicio distinto, que crea el blog en sus propios servidores." },
+  { q: "Tras copiar WordPress en htdocs/empresa, ¿cómo iniciamos la instalación?",
+    opciones: ["Abriendo http://localhost/empresa en el navegador y siguiendo el asistente", "Reiniciando el ordenador", "Ejecutando un programa llamado wordpress.exe", "Desde el escritorio de Windows"],
+    correcta: 0,
+    explicacion: "Al visitar http://localhost/empresa, WordPress detecta que aún no está configurado y arranca el famoso instalador de 5 minutos." },
+  { q: "El instalador nos pide el usuario y la contraseña de la base de datos. En XAMPP, ¿cuáles son por defecto?",
+    opciones: ["admin y admin", "wordpress y wordpress", "usuario y 1234", "root y contraseña vacía"],
+    correcta: 3,
+    explicacion: "XAMPP trae MySQL/MariaDB con el usuario root sin contraseña. Así solo en local: en un hosting real la base de datos siempre lleva contraseña." },
+  { q: "¿Qué URL corresponde al panel de administración (parte privada) de nuestro sitio?",
+    opciones: ["http://localhost/admin", "http://localhost/empresa/privado", "http://localhost/empresa/wp-admin", "http://localhost/wp-panel"],
+    correcta: 2,
+    explicacion: "La parte privada vive en wp-admin. También funciona http://localhost/empresa/wp-login.php, que muestra el formulario de acceso." },
+  { q: "¿Cuál es la diferencia principal entre la parte pública y la parte privada?",
+    opciones: ["La pública es para ordenadores y la privada para móviles", "La pública la ve cualquier visitante; la privada requiere iniciar sesión y es donde se gestiona el sitio", "La pública carga más rápido que la privada", "No hay diferencia: son la misma página con distinto diseño"],
+    correcta: 1,
+    explicacion: "La parte pública es el escaparate que ven los visitantes. La privada (el Escritorio) está protegida por usuario y contraseña y sirve para gestionar el sitio." },
+  { q: "Para iniciar sesión en wp-login.php, ¿qué credenciales usamos?",
+    opciones: ["El usuario root de MySQL, sin contraseña", "El nombre de la base de datos", "El usuario y la contraseña que creamos durante la instalación de WordPress", "El usuario de Windows del ordenador"],
+    correcta: 2,
+    explicacion: "No es el root de MySQL: ese solo sirve para entrar en phpMyAdmin. El acceso a WordPress utiliza los usuarios creados dentro de la propia aplicación." },
+  { q: "¿Qué es el Escritorio (Dashboard) de WordPress?",
+    opciones: ["Un programa que se instala en el escritorio de Windows", "La portada pública del sitio", "La base de datos donde se guardan las entradas", "La primera pantalla de la parte privada, con el menú lateral para gestionar todo el sitio"],
+    correcta: 3,
+    explicacion: "Desde el Escritorio se accede, con el menú lateral, a entradas, páginas, apariencia, plugins, usuarios y ajustes." },
+  { q: "¿Qué URL usamos para abrir phpMyAdmin con XAMPP?",
+    opciones: ["http://localhost/phpmyadmin", "http://phpmyadmin.local", "http://localhost/admin", "http://www.phpmyadmin.com"],
+    correcta: 0,
+    explicacion: "phpMyAdmin ya viene incluido en XAMPP: se abre en el navegador con http://localhost/phpmyadmin o con el botón Admin de la línea MySQL del panel de control." },
+  { q: "¿Qué es phpMyAdmin?",
+    opciones: ["Un gestor de contenidos como WordPress", "Una herramienta web para administrar bases de datos MySQL", "El navegador de Internet incluido en XAMPP", "Un programa de correo electrónico"],
+    correcta: 1,
+    explicacion: "MySQL/MariaDB es el sistema gestor de bases de datos y phpMyAdmin es la herramienta que nos permite administrarlo cómodamente desde el navegador." },
+  { q: "En phpMyAdmin, ¿cómo creamos la base de datos que usará WordPress?",
+    opciones: ["En la pestaña “Bases de datos”: escribimos el nombre y pulsamos “Crear”", "WordPress crea su base de datos automáticamente, sin que hagamos nada", "Subiendo un archivo .sql desde el escritorio", "Descargando una base de datos desde wordpress.org"],
+    correcta: 0,
+    explicacion: "Antes de instalar WordPress hay que crear una base de datos vacía (por ejemplo, empresa). WordPress la usará para guardar todo el contenido del sitio." }
+];
+
+const LETRAS = "abcd";
+const elInicio = document.getElementById("inicio");
+const elQuiz = document.getElementById("quiz");
+const elResultados = document.getElementById("resultados");
+const elContador = document.getElementById("contador");
+const elEnunciado = document.getElementById("enunciado");
+const elOpciones = document.getElementById("opciones");
+const elFeedback = document.getElementById("feedback");
+const elSiguiente = document.getElementById("boton-siguiente");
+
+let indice = 0;
+let aciertos = 0;
+let respuestas = [];
+
+function empezar() {
+  indice = 0;
+  aciertos = 0;
+  respuestas = [];
+  elInicio.hidden = true;
+  elResultados.hidden = true;
+  elQuiz.hidden = false;
+  mostrarPregunta();
+}
+
+function mostrarPregunta() {
+  const p = PREGUNTAS[indice];
+  elContador.textContent = "Pregunta " + (indice + 1) + " de " + PREGUNTAS.length;
+  elEnunciado.textContent = p.q;
+  elFeedback.hidden = true;
+  elSiguiente.hidden = true;
+  elSiguiente.disabled = false;
+  elSiguiente.textContent = (indice === PREGUNTAS.length - 1) ? "Ver resultados" : "Siguiente";
+  elOpciones.innerHTML = "";
+  p.opciones.forEach(function(texto, i) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "opcion";
+    b.innerHTML = '<span class="letra">' + LETRAS[i] + '</span><span>' + texto + '</span>';
+    b.addEventListener("click", function() { responder(i); });
+    elOpciones.appendChild(b);
+  });
+}
+
+function responder(i) {
+  const p = PREGUNTAS[indice];
+  const acierto = (i === p.correcta);
+  if (acierto) { aciertos++; }
+  respuestas.push({ elegida: i, acierto: acierto });
+  const botones = elOpciones.children;
+  for (let j = 0; j < botones.length; j++) {
+    botones[j].disabled = true;
+    if (j === p.correcta) { botones[j].classList.add("correcta"); }
+    else if (j === i) { botones[j].classList.add("fallada"); }
+    else { botones[j].classList.add("atenuada"); }
+  }
+  elFeedback.className = "feedback " + (acierto ? "ok" : "ko");
+  elFeedback.innerHTML = (acierto
+    ? "<strong>Correcto.</strong> "
+    : "<strong>No es correcto: la buena es la " + LETRAS[p.correcta] + ").</strong> ")
+    + p.explicacion;
+  elFeedback.hidden = false;
+  elSiguiente.hidden = false;
+}
+
+function siguiente() {
+  elSiguiente.disabled = true;
+  indice++;
+  if (indice < PREGUNTAS.length) { mostrarPregunta(); }
+  else { mostrarResultados(); }
+}
+
+function mostrarResultados() {
+  elQuiz.hidden = true;
+  elResultados.hidden = false;
+  const nota = Math.round(aciertos / PREGUNTAS.length * 100) / 10;
+  document.getElementById("nota").innerHTML = nota.toFixed(1).replace(".", ",") + " <small>/ 10</small>";
+  let msg;
+  if (nota >= 9) { msg = "¡Excelente! El entorno local no tiene secretos para ti."; }
+  else if (nota >= 7) { msg = "¡Muy bien! La instalación de WordPress está dominada."; }
+  else if (nota >= 5) { msg = "Aprobado. Repasa más abajo las preguntas que has fallado."; }
+  else { msg = "Todavía no llega. Revisa de nuevo la instalación de XAMPP y WordPress y vuelve a intentarlo."; }
+  document.getElementById("mensaje").textContent = msg;
+  document.getElementById("aciertos").textContent = "Has acertado " + aciertos + " de " + PREGUNTAS.length + " preguntas.";
+  const cont = document.getElementById("resena");
+  cont.innerHTML = "";
+  PREGUNTAS.forEach(function(p, i) {
+    const r = respuestas[i];
+    const div = document.createElement("div");
+    div.className = "item " + (r.acierto ? "ok" : "ko");
+    let html = '<div class="pregunta">' + (i + 1) + ". " + p.q + "</div>";
+    html += '<div class="' + (r.acierto ? "resp-ok" : "resp-ko") + '">Tu respuesta: ' + LETRAS[r.elegida] + ") " + p.opciones[r.elegida] + "</div>";
+    if (!r.acierto) {
+      html += '<div class="resp-ok">Respuesta correcta: ' + LETRAS[p.correcta] + ") " + p.opciones[p.correcta] + "</div>";
+    }
+    html += '<div class="explicacion">' + p.explicacion + "</div>";
+    div.innerHTML = html;
+    cont.appendChild(div);
+  });
+}
+
+document.getElementById("boton-empezar").addEventListener("click", empezar);
+document.getElementById("boton-siguiente").addEventListener("click", siguiente);
+document.getElementById("boton-repetir").addEventListener("click", empezar);
+</script>
+</body>
+</html>

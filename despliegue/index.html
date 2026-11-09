@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Despliegue · Tests de autoevaluación</title>
+<meta name="description" content="Tests interactivos de autoevaluación sobre el despliegue de aplicaciones web: FTP y FileZilla para subir archivos a un servidor, y próximamente publicación en Netlify y GitHub Pages. Feedback inmediato y sin registro.">
+<meta name="theme-color" content="#ea580c">
+<style>
+:root{
+  --e50:#fff7ed;--e100:#ffedd5;--e200:#fed7aa;--e500:#f97316;--e600:#ea580c;--e700:#c2410c;--e800:#9a3412;
+  --a50:#fffbeb;--a500:#f59e0b;--a800:#92400e;
+  --b50:#eff6ff;--b500:#3b82f6;--b700:#1d4ed8;
+  --v50:#f5f3ff;--v500:#8b5cf6;--v700:#6d28d9;
+  --c50:#ecfeff;--c700:#0e7490;
+  --t50:#f0fdfa;--t700:#0f766e;
+  --s50:#fafaf9;--s100:#f5f5f4;--s200:#e7e5e4;--s300:#d6d3d1;--s400:#a8a29e;--s500:#78716c;--s600:#57534e;--s700:#44403c;--s800:#292524;--s900:#1c1917;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--s900);
+  background:linear-gradient(180deg,var(--s50) 0%,#fff 40%,rgba(255,247,237,.7) 100%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+.container{width:100%;max-width:64rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+a{color:inherit}
+
+.cabecera{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;
+  padding:1.75rem 0 1rem;
+}
+.cabecera-texto{min-width:0}
+.marca-mini{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--e700);
+}
+.marca-mini .logo{
+  display:flex;height:1.5rem;width:1.5rem;align-items:center;justify-content:center;
+  border-radius:.4rem;background:var(--e600);color:#fff;
+}
+.marca-mini .logo svg{width:.875rem;height:.875rem}
+.titulo{margin-top:.35rem;font-size:1.75rem;font-weight:800;letter-spacing:-.03em;line-height:1.15;color:var(--s900)}
+.titulo span{color:var(--e700)}
+@media(min-width:640px){.titulo{font-size:2.25rem}}
+.meta{font-size:.8125rem;font-weight:600;color:var(--s500);white-space:nowrap;padding-bottom:.15rem;text-align:right}
+.meta a{color:var(--e700);text-decoration:none}
+@media(max-width:640px){
+  .cabecera{flex-direction:column;align-items:flex-start;gap:.5rem;padding:1.5rem 0 .75rem}
+  .meta{white-space:normal;text-align:left}
+}
+
+.quizzes{padding:.5rem 0 1rem}
+.lista{list-style:none;counter-reset:fila;display:flex;flex-direction:column;gap:.5rem}
+.lista li{counter-increment:fila}
+.fila{
+  position:relative;display:grid;
+  grid-template-columns:2.25rem 3.25rem minmax(0,1fr) auto;
+  align-items:center;gap:1rem;
+  background:#fff;border:1px solid var(--s200);border-radius:1rem;
+  padding:.875rem 1.125rem;text-decoration:none;
+  box-shadow:0 1px 2px rgba(0,0,0,.03);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
+  overflow:hidden;
+}
+.fila::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--acento,var(--e500));
+  opacity:0;transition:opacity .2s ease;
+}
+a.fila:hover{transform:translateX(4px);border-color:var(--s300);background:var(--fondo-icono,var(--e50));box-shadow:0 14px 26px -18px rgba(28,25,23,.35)}
+a.fila:hover::before{opacity:1}
+.fila:focus-visible{outline:2px solid var(--e600);outline-offset:3px}
+.fila--proximo{border-style:dashed;background:rgba(250,250,249,.7);cursor:default}
+.fila--proximo .fila-titulo{color:var(--s700)}
+.fila-num{font-size:.875rem;font-weight:700;color:var(--s500);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.fila-num::before{content:counter(fila,decimal-leading-zero)}
+.fila-icono{
+  display:flex;height:3.25rem;width:3.25rem;align-items:center;justify-content:center;
+  border-radius:.875rem;background:var(--fondo-icono,var(--e100));color:var(--acento,var(--e700));
+}
+.fila-icono svg{width:1.5rem;height:1.5rem}
+.fila-cuerpo{min-width:0}
+.fila-titulo{display:block;font-size:1.0625rem;font-weight:700;letter-spacing:-.01em;color:var(--s900)}
+.fila-desc{display:block;margin-top:.125rem;font-size:.8125rem;line-height:1.45;color:var(--s500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fila-datos{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.etiqueta{
+  display:inline-flex;align-items:center;gap:.3rem;
+  border-radius:9999px;background:var(--s100);
+  padding:.25rem .625rem;font-size:.75rem;font-weight:600;color:var(--s600);
+}
+.fila-preguntas{font-size:.8125rem;font-weight:600;color:var(--s500);white-space:nowrap}
+.fila-fecha{font-size:.75rem;font-weight:600;color:var(--s400);white-space:nowrap;font-variant-numeric:tabular-nums}
+.fila-flecha{
+  display:flex;height:2.25rem;width:2.25rem;align-items:center;justify-content:center;
+  border-radius:9999px;background:var(--s100);color:var(--s600);
+  transition:background .2s ease,color .2s ease,transform .2s ease;
+}
+.fila-flecha svg{width:1rem;height:1rem}
+a.fila:hover .fila-flecha{background:var(--acento);color:#fff;transform:translateX(2px)}
+.estado-proximo{
+  display:inline-flex;align-items:center;border-radius:9999px;
+  background:var(--a50);color:var(--a800);
+  padding:.25rem .625rem;font-size:.75rem;font-weight:700;white-space:nowrap;
+}
+
+.fila--ftp{--acento:var(--e700);--fondo-icono:var(--e50)}
+.fila--netlify{--acento:var(--c700);--fondo-icono:var(--c50)}
+.fila--pages{--acento:var(--v700);--fondo-icono:var(--v50)}
+
+@media(max-width:640px){
+  .fila{grid-template-columns:1.75rem 2.5rem minmax(0,1fr);row-gap:.625rem;padding:.875rem}
+  .fila-icono{height:2.5rem;width:2.5rem;border-radius:.75rem}
+  .fila-icono svg{width:1.2rem;height:1.2rem}
+  .fila-desc{white-space:normal}
+  .fila-datos{grid-column:1 / -1;justify-content:space-between;flex-wrap:wrap}
+  a.fila:hover{transform:none}
+}
+
+.nota{
+  margin-top:.75rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.15rem .6rem;
+  font-size:.8125rem;line-height:1.5;color:var(--s500);text-align:center;
+}
+.nota strong{color:var(--s700)}
+.nota span{white-space:nowrap}
+
+footer{margin-top:auto;padding:1.5rem 0;text-align:center;font-size:.8125rem;color:var(--s400)}
+footer strong{color:var(--s600)}
+
+@media(prefers-reduced-motion:reduce){
+  .fila,.fila-flecha{transition:none}
+  a.fila:hover{transform:none}
+  a.fila:hover .fila-flecha{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="cabecera container">
+  <div class="cabecera-texto">
+    <p class="marca-mini">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg>
+      </span>
+      Despliegue · Autoevaluación
+    </p>
+    <h1 class="titulo">Publica tu <span>aplicación web</span></h1>
+  </div>
+  <p class="meta"><a href="../index.html">← Volver al módulo</a><span style="display:block">1 test disponible · 15 preguntas</span></p>
+</header>
+
+<main class="quizzes container">
+  <ol class="lista">
+
+    <li>
+      <a class="fila fila--ftp" href="quiz-ftp-filezilla.html">
+        <span class="fila-num" aria-hidden="true"></span>
+        <span class="fila-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg>
+        </span>
+        <span class="fila-cuerpo">
+          <span class="fila-titulo">FTP y FileZilla</span>
+          <span class="fila-desc">Qué es FTP, puertos y modos, FTPS y SFTP, conexión con FileZilla, transferencias, permisos y publicación en el servidor.</span>
+        </span>
+        <span class="fila-datos">
+          <span class="etiqueta">Transferencia de archivos</span>
+          <time class="fila-fecha" datetime="2026-11-09" aria-label="Añadido el 9 de noviembre de 2026">9 nov 2026</time>
+          <span class="fila-preguntas">15 preguntas</span>
+          <span class="fila-flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </span>
+      </a>
+    </li>
+
+    <li>
+      <div class="fila fila--netlify fila--proximo">
+        <span class="fila-num" aria-hidden="true"></span>
+        <span class="fila-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m4.93 4.93 14.14 14.14"/><path d="M2 12h20"/><path d="m19.07 4.93-14.14 14.14"/></svg>
+        </span>
+        <span class="fila-cuerpo">
+          <span class="fila-titulo">Publicar en Netlify</span>
+          <span class="fila-desc">Conectar un repositorio, configurar el despliegue y publicar un sitio estático con Netlify.</span>
+        </span>
+        <span class="fila-datos">
+          <span class="estado-proximo">Próximamente</span>
+        </span>
+      </div>
+    </li>
+
+    <li>
+      <div class="fila fila--pages fila--proximo">
+        <span class="fila-num" aria-hidden="true"></span>
+        <span class="fila-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        </span>
+        <span class="fila-cuerpo">
+          <span class="fila-titulo">Publicar en GitHub Pages</span>
+          <span class="fila-desc">Publicar un sitio estático desde un repositorio de GitHub y servir el contenido con GitHub Pages.</span>
+        </span>
+        <span class="fila-datos">
+          <span class="estado-proximo">Próximamente</span>
+        </span>
+      </div>
+    </li>
+
+  </ol>
+
+  <p class="nota">
+    <span><strong>Feedback inmediato</strong> en cada respuesta</span>
+    <span>·</span>
+    <span><strong>Sin registro</strong></span>
+    <span>·</span>
+    <span>Repasa las explicaciones de las falladas</span>
+  </p>
+</main>
+
+<footer class="container">
+  <p><strong>Tests de Despliegue</strong> · Recurso didáctico para el aula</p>
+</footer>
+
+</body>
+</html>

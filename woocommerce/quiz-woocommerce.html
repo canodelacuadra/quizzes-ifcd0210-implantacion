@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de autoevaluación · WooCommerce</title>
+<meta name="description" content="Quiz interactivo de autoevaluación sobre WooCommerce: qué es, productos simples y variables, atributos y variaciones, carrito, checkout, pedidos, existencias y precios. 18 preguntas con feedback inmediato.">
+<style>
+:root{
+  --e50:#ecfdf5;--e100:#d1fae5;--e200:#a7f3d0;--e300:#6ee7b7;--e400:#34d399;--e500:#10b981;--e600:#059669;--e700:#047857;--e800:#065f46;
+  --a50:#fffbeb;--a300:#fcd34d;--a500:#f59e0b;--a800:#92400e;
+  --r50:#fff1f2;--r200:#fecdd3;--r400:#fb7185;--r500:#f43f5e;
+  --s50:#fafaf9;--s100:#f5f5f4;--s200:#e7e5e4;--s300:#d6d3d1;--s400:#a8a29e;--s500:#78716c;--s600:#57534e;--s700:#44403c;--s800:#292524;--s900:#1c1917;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--s900);background:#fff;-webkit-font-smoothing:antialiased}
+.page{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--s50) 0%,#fff 45%,rgba(236,253,245,.65) 100%)}
+.container{width:100%;max-width:48rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+.cabecera{display:flex;align-items:center;justify-content:center;gap:.625rem;padding:2rem 0 .5rem}
+.logo{display:flex;height:2.25rem;width:2.25rem;align-items:center;justify-content:center;border-radius:.75rem;background:var(--e600);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.logo svg{width:1.25rem;height:1.25rem}
+.titulo-marca{font-size:1.125rem;font-weight:700;letter-spacing:-.01em;color:var(--s800)}
+main.container{padding-top:1.5rem;padding-bottom:1.5rem}
+.tarjeta{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1.5rem;box-shadow:0 20px 25px -5px rgba(6,78,59,.05),0 8px 10px -6px rgba(6,78,59,.05)}
+.tarjeta-inicio{padding:2.5rem 1.5rem}
+@media(min-width:640px){.tarjeta-inicio{padding:3.5rem 2.5rem}}
+.centrado{text-align:center;display:flex;flex-direction:column;align-items:center}
+.icono-grande{display:flex;height:4rem;width:4rem;align-items:center;justify-content:center;border-radius:1rem;background:var(--e100);color:var(--e700)}
+.icono-grande svg{width:2.25rem;height:2.25rem}
+.icono-trofeo{background:#fef3c7;color:#d97706}
+.ceja{margin-top:1.25rem;font-size:.875rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--e700)}
+.titulo{margin-top:.5rem;font-size:1.875rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.titulo{font-size:2.25rem}}
+.intro{margin-top:1rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+@media(min-width:640px){.intro{font-size:1.125rem}}
+.chips{margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.375rem;border-radius:9999px;background:var(--s100);padding:.375rem .75rem;font-size:.8125rem;font-weight:500;color:var(--s700)}
+.chip svg{width:.875rem;height:.875rem;color:var(--e600)}
+.caracteristicas{margin-top:2rem;width:100%;display:grid;gap:.75rem}
+@media(min-width:640px){.caracteristicas{grid-template-columns:repeat(3,1fr)}}
+.caracteristica{text-align:left;border:1px solid var(--s200);border-radius:1rem;background:rgba(250,250,249,.6);padding:1rem}
+.caracteristica svg{width:1.25rem;height:1.25rem;color:var(--e600)}
+.caracteristica h3{margin-top:.5rem;font-size:.875rem;font-weight:600;color:var(--s800)}
+.caracteristica p{margin-top:.25rem;font-size:.75rem;line-height:1.5;color:var(--s500)}
+.boton{display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-family:inherit;border-radius:1rem;font-weight:700;transition:all .2s ease}
+.boton-principal{margin-top:2.25rem;height:3.5rem;padding:0 2.5rem;background:var(--e600);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(5,150,105,.25)}
+.boton-principal:hover{background:var(--e700);transform:translateY(-2px);box-shadow:0 15px 20px -3px rgba(5,150,105,.3)}
+.boton-principal svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.boton-oscuro{height:3rem;padding:0 2rem;background:var(--s900);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.2)}
+.boton-oscuro:hover{background:var(--s800);transform:translateY(-2px)}
+.boton-oscuro svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.nota-pequena{margin-top:.75rem;font-size:.75rem;color:var(--s400)}
+.panel-progreso{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1rem;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.fila-progreso{display:flex;align-items:center;justify-content:space-between;font-size:.875rem;font-weight:600;color:var(--s600)}
+.aciertos{color:var(--s400)}
+.verde{color:var(--e700)}
+.barra{margin-top:.75rem;height:.625rem;background:var(--s100);border-radius:9999px;overflow:hidden}
+.barra-relleno{height:100%;width:0;background:var(--e500);border-radius:9999px;transition:width .5s ease}
+.tarjeta-pregunta{margin-top:1.25rem;padding:1.5rem}
+@media(min-width:640px){.tarjeta-pregunta{padding:2rem}}
+.etiqueta{display:inline-flex;border-radius:9999px;background:var(--e100);padding:.25rem .75rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--e700)}
+.pregunta-texto{margin-top:1rem;font-size:1.25rem;font-weight:700;line-height:1.4;color:var(--s900)}
+@media(min-width:640px){.pregunta-texto{font-size:1.5rem}}
+.opciones{margin-top:1.5rem;display:flex;flex-direction:column;gap:.75rem}
+.opcion{display:flex;width:100%;align-items:center;gap:1rem;border:2px solid var(--s200);border-radius:1rem;background:#fff;padding:1rem;text-align:left;font-family:inherit;cursor:pointer;transition:all .2s ease}
+.opcion:not(:disabled):hover{border-color:#34d399;background:rgba(236,253,245,.5);transform:translateY(-2px);box-shadow:0 4px 6px rgba(0,0,0,.06)}
+.opcion:disabled{cursor:default}
+.letra{display:flex;height:2.25rem;width:2.25rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;background:var(--s100);color:var(--s600);font-size:.875rem;font-weight:800;transition:background .2s,color .2s}
+.opcion:not(:disabled):hover .letra{background:var(--e600);color:#fff}
+.opcion .texto{flex:1;font-size:.9375rem;font-weight:500;line-height:1.4;color:var(--s800)}
+@media(min-width:640px){.opcion .texto{font-size:1rem}}
+.marca{width:1.5rem;height:1.5rem;flex-shrink:0}
+.opcion.correcta{border-color:var(--e500);background:var(--e50);box-shadow:0 4px 6px rgba(5,150,105,.1)}
+.opcion.correcta .letra{background:var(--e600);color:#fff}
+.opcion.correcta .marca{color:var(--e600)}
+.opcion.fallada{border-color:var(--r400);background:var(--r50);box-shadow:0 4px 6px rgba(225,29,72,.1)}
+.opcion.fallada .letra{background:var(--r500);color:#fff}
+.opcion.fallada .marca{color:var(--r500)}
+.opcion.apagada{border-color:var(--s200);background:#fff;opacity:.45}
+.feedback{margin-top:1.5rem;border:2px solid;border-radius:1rem;padding:1.25rem;animation:fadeUp .3s ease both}
+.feedback.fb-ok{border-color:var(--e300);background:rgba(236,253,245,.7)}
+.feedback.fb-casi{border-color:var(--a300);background:rgba(255,251,235,.7)}
+.feedback-flex{display:flex;align-items:flex-start;gap:.75rem}
+.feedback-icono{display:flex;height:2.5rem;width:2.5rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;color:#fff}
+.feedback-icono svg{width:1.5rem;height:1.5rem}
+.fb-ok .feedback-icono{background:var(--e600)}
+.fb-casi .feedback-icono{background:var(--a500)}
+.fb-titulo{font-size:1rem;font-weight:700}
+.fb-ok .fb-titulo{color:var(--e800)}
+.fb-casi .fb-titulo{color:var(--a800)}
+.fb-texto{margin-top:.375rem;font-size:.9375rem;line-height:1.625;color:var(--s700)}
+.zona-siguiente{margin-top:1.5rem;display:flex;justify-content:flex-end;animation:fadeUp .3s ease both}
+.res-titulo{margin-top:1rem;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.res-titulo{font-size:1.875rem}}
+.res-texto{margin-top:.75rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+.resultados-grid{margin-top:1.75rem;width:100%;max-width:28rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.res-caja{border:1px solid var(--s200);background:var(--s50);border-radius:1rem;padding:1.25rem}
+.res-caja-verde{border-color:var(--e200);background:var(--e50)}
+.res-num{font-size:2rem;font-weight:800;color:var(--s800)}
+.res-caja-verde .res-num{color:var(--e700)}
+.res-total{font-size:1.125rem;font-weight:700;color:var(--e400)}
+.res-etiqueta{margin-top:.25rem;font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--s500)}
+.res-caja-verde .res-etiqueta{color:var(--e600)}
+.tarjeta-repaso{margin-top:1.5rem;padding:1.5rem 1.5rem 2rem}
+@media(min-width:640px){.tarjeta-repaso{padding:2rem 2rem 2.5rem}}
+.repaso-titulo{font-size:1.125rem;font-weight:700;color:var(--s900)}
+.repaso-sub{margin-top:.25rem;font-size:.875rem;color:var(--s500)}
+.lista-repaso{margin-top:1.25rem;display:flex;flex-direction:column;gap:.75rem;max-height:24rem;overflow-y:auto;padding-right:.5rem;scrollbar-width:thin}
+.lista-repaso::-webkit-scrollbar{width:.5rem}
+.lista-repaso::-webkit-scrollbar-thumb{border-radius:9999px;background:var(--s300)}
+.repaso{border:2px solid;border-radius:1rem;padding:1rem}
+.repaso.r-ok{border-color:var(--e200);background:rgba(236,253,245,.4)}
+.repaso.r-mal{border-color:var(--r200);background:rgba(255,241,242,.4)}
+.repaso-flex{display:flex;align-items:flex-start;gap:.75rem}
+.repaso-icono{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:.125rem}
+.r-ok .repaso-icono{color:var(--e600)}
+.r-mal .repaso-icono{color:var(--r500)}
+.repaso-pregunta{font-size:.875rem;font-weight:700;color:var(--s800)}
+.repaso-correcta{margin-top:.375rem;font-size:.75rem;font-weight:600;color:var(--e700)}
+.repaso-explicacion{margin-top:.375rem;font-size:.75rem;line-height:1.5;color:var(--s600)}
+.pie{margin-top:auto;width:100%}
+.pie-inner{max-width:48rem;margin:0 auto;padding:1.5rem 1rem;text-align:center;font-size:.75rem;color:var(--s400)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.animar{animation:fadeUp .5s ease both}
+button:focus-visible{outline:2px solid var(--e600);outline-offset:2px}
+.pregunta-texto,.opcion .texto,.repaso-pregunta,.repaso-correcta,.repaso-explicacion{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="container cabecera">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+      <span class="titulo-marca">Quiz · WooCommerce</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PANTALLA DE INICIO -->
+    <section id="pantalla-inicio" class="tarjeta tarjeta-inicio animar" aria-labelledby="titulo-principal">
+      <div class="centrado">
+        <span class="icono-grande" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+        <p class="ceja">Autoevaluación</p>
+        <h1 id="titulo-principal" class="titulo">Introducción a WooCommerce</h1>
+        <p class="intro">Comprueba lo que has aprendido en la introducción a WooCommerce, la tienda online sobre WordPress. Responde a las 18 preguntas y descubre tu nota al instante.</p>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>El plugin de la tienda</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Productos y categorías</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Atributos y variaciones</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Carrito y checkout</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Pedidos y existencias</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Precios y ofertas</span>
+        </div>
+        <div class="caracteristicas">
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+            <h3>18 preguntas</h3>
+            <p>Tipo test con 4 opciones y una sola respuesta correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4.1 12 6"/><path d="m5.1 8-2.9-.8"/><path d="m6 12-1.9 2"/><path d="M7.2 2.2 8 5.1"/><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74 1.007l.229 4.461a.5.5 0 0 1-.898.375l-5.821-11.68Z"/></svg>
+            <h3>Feedback inmediato</h3>
+            <p>Tras cada respuesta verás la explicación de por qué es correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <h3>Sin prisa ni límite</h3>
+            <p>Sin cronómetro. Puedes repetir el quiz cuantas veces quieras.</p>
+          </div>
+        </div>
+        <button type="button" class="boton boton-principal" onclick="empezar()">
+          Empezar el quiz
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="nota-pequena">La nota final se calcula sobre 10 puntos.</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE PREGUNTA -->
+    <section id="pantalla-pregunta" hidden aria-live="polite">
+      <div class="panel-progreso">
+        <div class="fila-progreso">
+          <span id="progreso-texto"></span>
+          <span id="progreso-aciertos" class="aciertos"></span>
+        </div>
+        <div class="barra"><div id="barra-relleno" class="barra-relleno"></div></div>
+      </div>
+      <div class="tarjeta tarjeta-pregunta">
+        <span class="etiqueta" id="etiqueta-numero"></span>
+        <h2 id="texto-pregunta" class="pregunta-texto"></h2>
+        <div id="grupo-opciones" class="opciones" role="group" aria-label="Opciones de respuesta"></div>
+        <div id="caja-feedback" class="feedback" hidden role="status">
+          <div class="feedback-flex">
+            <span class="feedback-icono" id="fb-icono" aria-hidden="true"></span>
+            <div>
+              <p id="fb-titulo" class="fb-titulo"></p>
+              <p id="fb-texto" class="fb-texto"></p>
+            </div>
+          </div>
+        </div>
+        <div id="zona-siguiente" class="zona-siguiente" hidden>
+          <button type="button" class="boton boton-oscuro" id="btn-siguiente" onclick="siguiente()">Siguiente pregunta</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE RESULTADOS -->
+    <section id="pantalla-resultados" hidden aria-labelledby="res-titulo">
+      <div class="tarjeta tarjeta-inicio animar">
+        <div class="centrado">
+          <span class="icono-grande icono-trofeo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <h2 id="res-titulo" class="res-titulo"></h2>
+          <p id="res-texto" class="res-texto"></p>
+          <div class="resultados-grid">
+            <div class="res-caja res-caja-verde">
+              <p class="res-num"><span id="res-aciertos"></span> <span class="res-total" id="res-total"></span></p>
+              <p class="res-etiqueta">Respuestas correctas</p>
+            </div>
+            <div class="res-caja">
+              <p class="res-num" id="res-nota"></p>
+              <p class="res-etiqueta">Nota final (sobre 10)</p>
+            </div>
+          </div>
+          <button type="button" class="boton boton-principal" onclick="empezar()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:0;margin-right:.5rem"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reintentar el quiz
+          </button>
+          <p class="nota-pequena">En cada intento las opciones se mezclan para que no te aprendas las letras.</p>
+        </div>
+      </div>
+      <div class="tarjeta tarjeta-repaso">
+        <h3 class="repaso-titulo">Repaso de todas las preguntas</h3>
+        <p class="repaso-sub">Lee las explicaciones de las que fallaste antes de volver a intentarlo.</p>
+        <ol id="lista-repaso" class="lista-repaso"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="pie-inner">Quiz de autoevaluación · Introducción a WooCommerce · Recurso didáctico para el aula</div>
+  </footer>
+</div>
+<script>
+'use strict';
+/* ================= BANCO DE PREGUNTAS =================
+   Puedes editar este bloque para añadir, quitar o cambiar preguntas.
+   En cada pregunta: opciones (4), correcta = índice de la correcta (0-3),
+   explicacion = texto que se muestra tras responder. */
+var PREGUNTAS = [
+  {
+    pregunta: '¿Qué es WooCommerce?',
+    opciones: [
+      'Un programa de escritorio para gestionar las ventas',
+      'El plugin gratuito que convierte WordPress en una tienda online',
+      'Un tema de WordPress especializado en blogs',
+      'Un servicio de hosting para tiendas'
+    ],
+    correcta: 1,
+    explicacion: 'WooCommerce es un plugin gratuito que se instala sobre WordPress y añade todo lo necesario para vender en línea: catálogo de productos, carrito, checkout, pedidos y pagos. Es el sistema de comercio electrónico más usado del mundo.'
+  },
+  {
+    pregunta: '¿WooCommerce es un CMS, un tema o un plugin?',
+    opciones: [
+      'Un CMS completo, independiente de WordPress',
+      'Una extensión del navegador',
+      'Un tema de WordPress',
+      'Un plugin de WordPress'
+    ],
+    correcta: 3,
+    explicacion: 'Es un plugin: se instala desde Plugins → Añadir nuevo y añade funciones al WordPress que ya tienes. El CMS es WordPress; el tema puede ser el que uses (hay temas pensados para tiendas, como Storefront), pero WooCommerce en sí es un plugin.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre WordPress y WooCommerce?',
+    opciones: [
+      'Ninguna: son el mismo producto con dos nombres',
+      'WordPress es el CMS que gestiona los contenidos; WooCommerce es el plugin que añade la tienda (productos, carrito, pedidos)',
+      'WordPress sirve para tiendas y WooCommerce para blogs',
+      'WooCommerce funciona solo, sin necesidad de WordPress'
+    ],
+    correcta: 1,
+    explicacion: 'WordPress es la base: el CMS que gestiona páginas, entradas, usuarios y medios. WooCommerce se apoya en él para añadir la parte de comercio: catálogo, carrito, checkout, pedidos y clientes. Sin WordPress no hay WooCommerce.'
+  },
+  {
+    pregunta: '¿Para qué sirven las categorías de productos?',
+    opciones: [
+      'Para cambiar el color de la tienda',
+      'Para aplicar descuentos automáticamente',
+      'Para organizar el catálogo en familias (p. ej. "Ropa", "Zapatillas") y que el cliente encuentre todo más fácil',
+      'Para guardar los pedidos por meses'
+    ],
+    correcta: 2,
+    explicacion: 'Las categorías de producto (Productos → Categorías) ordenan el catálogo por familias o tipos, igual que las categorías ordenan las entradas. Se pueden mostrar en el menú o en la página de tienda, y ayudan mucho a la navegación.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre un producto simple y uno variable?',
+    opciones: [
+      'El simple es gratis y el variable es de pago',
+      'No hay diferencia: son dos nombres para lo mismo',
+      'El variable solo se usa para productos virtuales',
+      'El simple es un único producto con un precio; el variable ofrece opciones (talla, color, RAM...) que generan variaciones con su propio precio y stock'
+    ],
+    correcta: 3,
+    explicacion: 'Un producto simple es exactamente eso: uno solo, con un precio y unas existencias. Un producto variable es el mismo artículo con distintas opciones: cada combinación de atributos crea una variación que puede tener precio, stock, imagen o SKU propios.'
+  },
+  {
+    pregunta: '¿Qué es el carrito de compra?',
+    opciones: [
+      'El almacén donde se guardan los productos físicos',
+      'La página donde el cliente guarda los productos que quiere comprar antes de finalizar el pedido',
+      'El listado de todos los productos de la tienda',
+      'El panel donde el administrador crea los productos'
+    ],
+    correcta: 1,
+    explicacion: 'El carrito (Cart) acumula los productos que el cliente ha elegido: puede cambiar cantidades, quitar artículos y ver el total antes de comprar. Cuando está listo, pulsa "Finalizar compra" y pasa al checkout.'
+  },
+  {
+    pregunta: '¿Qué significa checkout?',
+    opciones: [
+      'El nombre del inventario de la tienda',
+      'El buscador de productos',
+      'Un tipo de producto descargable',
+      'El paso de finalizar compra: el cliente revisa el pedido y rellena sus datos (dirección, envío y pago) para completarlo'
+    ],
+    correcta: 3,
+    explicacion: 'Checkout (en español, "finalizar compra") es la página donde se cierra la venta: el cliente confirma el carrito, indica la dirección de envío y facturación, elige el método de pago y realiza el pedido. Al terminar, el pedido se registra en la tienda.'
+  },
+  {
+    pregunta: '¿Dónde podemos consultar los pedidos recibidos?',
+    opciones: [
+      'En el menú WooCommerce → Pedidos, dentro del escritorio de WordPress',
+      'En Ajustes → Lectura',
+      'En la biblioteca multimedia',
+      'En la página de inicio de la tienda'
+    ],
+    correcta: 0,
+    explicacion: 'Al instalar WooCommerce se crea su propio menú en el escritorio. En WooCommerce → Pedidos aparece cada pedido con su estado (pendiente de pago, procesando, completado...), y desde ahí se pueden ver los detalles, actualizarlos o marcarlos como completados.'
+  },
+  {
+    pregunta: '¿Para qué sirve gestionar las existencias?',
+    opciones: [
+      'Para cambiar el precio de los productos cada semana',
+      'Para ordenar los productos alfabéticamente',
+      'Para subir fotos a la biblioteca',
+      'Para controlar cuántas unidades hay de cada producto y evitar vender algo que ya no queda'
+    ],
+    correcta: 3,
+    explicacion: 'Si activas la gestión de inventario en un producto, WooCommerce descuenta una unidad en cada venta, avisa al llegar al umbral que definas y puede marcar el producto como "agotado" (o incluso ocultarlo o permitir pedidos en espera). Así no vendes lo que no tienes.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre un producto virtual y uno descargable?',
+    opciones: [
+      'Ninguna: son dos nombres para lo mismo',
+      'El virtual no se puede comprar',
+      'El descargable no necesita precio',
+      'El virtual no requiere envío (un servicio, una entrada); el descargable entrega un archivo al cliente tras la compra (un PDF, una música)'
+    ],
+    correcta: 3,
+    explicacion: 'Un producto virtual no se envía físicamente: una consulta, un curso, una entrada a un espectáculo. Un producto descargable además entrega un archivo: tras el pago, el cliente recibe un enlace para descargarlo. Pueden combinarse, y en ninguno de los dos casos se pide dirección de envío.'
+  },
+  {
+    pregunta: '¿Qué es un atributo en WooCommerce?',
+    opciones: [
+      'El comentario que deja el cliente en el producto',
+      'Una característica que define las variantes de un producto, con sus valores (p. ej. Talla: S, M, L)',
+      'El impuesto que se aplica al producto',
+      'La imagen destacada del producto'
+    ],
+    correcta: 1,
+    explicacion: 'Un atributo es una característica que puede variar: talla, color, capacidad, material... Cada atributo tiene sus valores (Talla: S, M, L). Los atributos marcados como "usados para variaciones" son los que generan las versiones de un producto variable.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre un atributo global y uno personalizado?',
+    opciones: [
+      'El global se crea en Productos → Atributos y puede reutilizarse en cualquier producto; el personalizado se crea al vuelo dentro de un producto concreto',
+      'El global solo lo ve el administrador',
+      'El personalizado se aplica a toda la tienda a la vez',
+      'No hay diferencia: son lo mismo'
+    ],
+    correcta: 0,
+    explicacion: 'Si vas a usar "Talla" o "Color" en muchos productos, conviene crearlos como atributos globales (Productos → Atributos) y reutilizarlos. El atributo personalizado se define dentro de un solo producto, a mano; es rápido, pero no se comparte con el resto del catálogo.'
+  },
+  {
+    pregunta: '¿Para qué sirve la opción "Usado para variaciones"?',
+    opciones: [
+      'Para marcar los productos como agotados',
+      'Para ocultar el atributo en la ficha del producto',
+      'Para aplicar un descuento al atributo',
+      'Para indicar que ese atributo genera variaciones del producto, y no solo información'
+    ],
+    correcta: 3,
+    explicacion: 'Un atributo puede ser informativo (el material de una camiseta, que no cambia) o definitorio. Al marcar "Usado para variaciones", sus valores se combinan para crear las variaciones del producto variable, cada una con su precio y sus existencias.'
+  },
+  {
+    pregunta: '¿Cuántas combinaciones podemos generar con tres valores de RAM y tres de almacenamiento?',
+    opciones: [
+      '6 combinaciones, porque se suman',
+      '3 combinaciones, una por cada atributo',
+      '9 combinaciones, porque se multiplican las opciones (3 × 3)',
+      'Depende del tema activo de la tienda'
+    ],
+    correcta: 2,
+    explicacion: 'Cada valor de RAM se combina con cada valor de almacenamiento: 3 × 3 = 9 variaciones (4/64, 4/128, 4/256, 8/64...). Por eso los productos variables con muchos atributos generan tantas variaciones: conviene revisar bien las opciones antes de crearlas todas.'
+  },
+  {
+    pregunta: '¿Dónde se configuran los precios de las variaciones?',
+    opciones: [
+      'En Ajustes → Generales',
+      'En la pestaña de Envío del producto',
+      'En la pestaña Variaciones del producto, editando cada variación por separado',
+      'Se eligen al azar al publicar el producto'
+    ],
+    correcta: 2,
+    explicacion: 'En un producto variable, el precio general se deja vacío y se asigna en la pestaña "Variaciones": despliegas cada variación y le pones su precio normal o rebajado (y también su stock, SKU o imagen). Al guardarlo, WooCommerce muestra en la ficha un rango de precios, por ejemplo "9 € a 12 €".'
+  },
+  {
+    pregunta: '¿Qué significa SKU?',
+    opciones: [
+      'Stock Keeping Unit: el código o referencia única que identifica cada producto o variación',
+      'Sistema de Kilos Uniformes: el peso del producto',
+      'La licencia del tema de la tienda',
+      'El buscador de palabras clave de la tienda'
+    ],
+    correcta: 0,
+    explicacion: 'SKU (Stock Keeping Unit) es la referencia interna de un producto: un código único que ayuda a identificarlo en el inventario y en los pedidos. En productos variables, cada variación puede tener su propio SKU (p. ej. MOB-RAM4-A128).'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre precio normal y precio rebajado?',
+    opciones: [
+      'El normal es el habitual de venta; el rebajado es el de la oferta, y el normal se muestra tachado',
+      'El normal es para administradores y el rebajado para clientes',
+      'Son lo mismo: WooCommerce elige uno al azar',
+      'El rebajado solo se aplica a productos virtuales'
+    ],
+    correcta: 0,
+    explicacion: 'El precio normal es el de venta habitual. Si rellenas también el precio rebajado (oferta), WooCommerce muestra el producto con el precio normal tachado y el rebajado destacado. Se puede poner fecha de inicio y fin a la rebaja para hacer campañas.'
+  },
+  {
+    pregunta: '¿Podemos controlar las existencias de cada variación por separado?',
+    opciones: [
+      'No, el stock solo se gestiona para el producto entero',
+      'Solo si el producto es descargable',
+      'Sí: cada variación puede tener su propio stock, SKU y precio',
+      'Solo el primer mes tras crear el producto'
+    ],
+    correcta: 2,
+    explicacion: 'Esa es precisamente la gracia de las variaciones: si de la talla S quedan 3 unidades y de la M 20, se registra en cada variación por separado, y WooCommerce marca agotada la que se vacíe aunque las demás sigan disponibles.'
+  }
+];
+
+/* ================= LÓGICA DEL QUIZ ================= */
+var LETRAS = ['A', 'B', 'C', 'D'];
+var preguntas = [], actual = 0, seleccionada = null, respuestas = [];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function iconoSvg(nombre) {
+  var rutas = {
+    'check': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>',
+    'cruz': '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+    'bombilla': '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+    'flecha': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
+  };
+  return '<svg class="marca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + rutas[nombre] + '</svg>';
+}
+
+function mezclar(lista) {
+  return lista.map(function (q) {
+    var idx = q.opciones.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    return { pregunta: q.pregunta, opciones: idx.map(function (i) { return q.opciones[i]; }), correcta: idx.indexOf(q.correcta), explicacion: q.explicacion };
+  });
+}
+
+function mostrar(nombre) {
+  ['inicio', 'pregunta', 'resultados'].forEach(function (s) {
+    $('pantalla-' + s).hidden = (s !== nombre);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function aciertos() {
+  var n = 0;
+  for (var i = 0; i < preguntas.length; i++) {
+    if (respuestas[i] !== undefined && respuestas[i] === preguntas[i].correcta) n++;
+  }
+  return n;
+}
+
+function pintarProgreso() {
+  var total = preguntas.length;
+  $('progreso-texto').innerHTML = 'Pregunta <span class="verde">' + (actual + 1) + '</span> de ' + total;
+  $('progreso-aciertos').textContent = aciertos() + ' aciertos hasta ahora';
+  $('etiqueta-numero').textContent = 'Pregunta ' + (actual + 1);
+  var pct = ((actual + (seleccionada !== null ? 1 : 0)) / total) * 100;
+  $('barra-relleno').style.width = pct + '%';
+  $('barra-relleno').setAttribute('aria-label', 'Progreso: pregunta ' + (actual + 1) + ' de ' + total);
+}
+
+function pintarPregunta() {
+  var q = preguntas[actual];
+  seleccionada = null;
+  $('texto-pregunta').textContent = q.pregunta;
+  $('grupo-opciones').innerHTML = q.opciones.map(function (op, i) {
+    return '<button type="button" class="opcion" data-i="' + i + '" onclick="seleccionar(' + i + ')">' +
+      '<span class="letra">' + LETRAS[i] + '</span>' +
+      '<span class="texto">' + esc(op) + '</span>' +
+      '</button>';
+  }).join('');
+  $('caja-feedback').hidden = true;
+  $('zona-siguiente').hidden = true;
+  pintarProgreso();
+}
+
+function empezar() {
+  preguntas = mezclar(PREGUNTAS);
+  actual = 0;
+  respuestas = [];
+  mostrar('pregunta');
+  pintarPregunta();
+}
+
+function seleccionar(i) {
+  if (seleccionada !== null) return;
+  seleccionada = i;
+  respuestas[actual] = i;
+  var q = preguntas[actual];
+  var botones = document.querySelectorAll('#grupo-opciones .opcion');
+  botones.forEach(function (b, idx) {
+    b.disabled = true;
+    if (idx === q.correcta) { b.classList.add('correcta'); b.insertAdjacentHTML('beforeend', iconoSvg('check')); }
+    else if (idx === i) { b.classList.add('fallada'); b.insertAdjacentHTML('beforeend', iconoSvg('cruz')); }
+    else { b.classList.add('apagada'); }
+  });
+  var ok = (i === q.correcta);
+  var caja = $('caja-feedback');
+  caja.className = 'feedback ' + (ok ? 'fb-ok' : 'fb-casi');
+  $('fb-icono').innerHTML = iconoSvg(ok ? 'check' : 'bombilla');
+  $('fb-titulo').textContent = ok ? '¡Correcto, muy bien!' : 'Casi. La respuesta correcta es la ' + LETRAS[q.correcta] + '.';
+  $('fb-texto').textContent = q.explicacion;
+  caja.hidden = false;
+  $('btn-siguiente').innerHTML = (actual === preguntas.length - 1 ? 'Ver mi resultado' : 'Siguiente pregunta') +
+    ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;margin-left:.5rem"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  $('zona-siguiente').hidden = false;
+  pintarProgreso();
+}
+
+function siguiente() {
+  if (actual === preguntas.length - 1) {
+    pintarResultados();
+    mostrar('resultados');
+  } else {
+    actual++;
+    pintarPregunta();
+  }
+}
+
+function mensajeResultado(pct) {
+  if (pct === 100) return { t: '¡Puntuación perfecta!', x: 'Has acertado todas las preguntas. Dominas los conceptos básicos de WooCommerce: ya puedes montar y gestionar tu primera tienda.' };
+  if (pct >= 75) return { t: '¡Excelente trabajo!', x: 'Tienes muy claros los productos, los atributos y el flujo de compra. Repasa las preguntas falladas y estarás perfecto.' };
+  if (pct >= 50) return { t: '¡Buen trabajo!', x: 'Vas por buen camino. Lee con calma las explicaciones de este repaso y vuelve a intentarlo para subir la nota.' };
+  return { t: 'Sigue practicando', x: 'No te preocupes: lo importante es aprender. Revisa las explicaciones de abajo, practica con tu tienda en XAMPP y vuelve a intentarlo.' };
+}
+
+function pintarResultados() {
+  var total = preguntas.length, ok = aciertos();
+  var pct = (ok / total) * 100;
+  var nota = (ok / total * 10).toFixed(1).replace('.', ',');
+  var m = mensajeResultado(pct);
+  $('res-titulo').textContent = m.t;
+  $('res-texto').textContent = m.x;
+  $('res-aciertos').textContent = ok;
+  $('res-total').textContent = '/ ' + total;
+  $('res-nota').textContent = nota;
+  $('lista-repaso').innerHTML = preguntas.map(function (q, i) {
+    var bien = (respuestas[i] === q.correcta);
+    return '<li class="repaso ' + (bien ? 'r-ok' : 'r-mal') + '">' +
+      '<div class="repaso-flex">' +
+      '<span class="repaso-icono">' + iconoSvg(bien ? 'check' : 'cruz') + '</span>' +
+      '<div style="min-width:0">' +
+      '<p class="repaso-pregunta">' + (i + 1) + '. ' + esc(q.pregunta) + '</p>' +
+      (bien ? '' : '<p class="repaso-correcta">Respuesta correcta: ' + esc(q.opciones[q.correcta]) + '</p>') +
+      '<p class="repaso-explicacion">' + esc(q.explicacion) + '</p>' +
+      '</div></div></li>';
+  }).join('');
+}
+</script>
+</body>
+</html>

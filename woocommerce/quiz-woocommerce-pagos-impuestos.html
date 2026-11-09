@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de autoevaluación · Pagos e impuestos en WooCommerce</title>
+<meta name="description" content="Quiz interactivo de autoevaluación sobre pagos e impuestos en WooCommerce: métodos y pasarelas de pago, IVA, base imponible, tarifas y clases fiscales, precios con y sin impuestos y compras de prueba. 20 preguntas con feedback inmediato.">
+<style>
+:root{
+  --e50:#ecfdf5;--e100:#d1fae5;--e200:#a7f3d0;--e300:#6ee7b7;--e400:#34d399;--e500:#10b981;--e600:#059669;--e700:#047857;--e800:#065f46;
+  --a50:#fffbeb;--a300:#fcd34d;--a500:#f59e0b;--a800:#92400e;
+  --r50:#fff1f2;--r200:#fecdd3;--r400:#fb7185;--r500:#f43f5e;
+  --s50:#fafaf9;--s100:#f5f5f4;--s200:#e7e5e4;--s300:#d6d3d1;--s400:#a8a29e;--s500:#78716c;--s600:#57534e;--s700:#44403c;--s800:#292524;--s900:#1c1917;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--s900);background:#fff;-webkit-font-smoothing:antialiased}
+.page{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--s50) 0%,#fff 45%,rgba(236,253,245,.65) 100%)}
+.container{width:100%;max-width:48rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+.cabecera{display:flex;align-items:center;justify-content:center;gap:.625rem;padding:2rem 0 .5rem}
+.logo{display:flex;height:2.25rem;width:2.25rem;align-items:center;justify-content:center;border-radius:.75rem;background:var(--e600);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.logo svg{width:1.25rem;height:1.25rem}
+.titulo-marca{font-size:1.125rem;font-weight:700;letter-spacing:-.01em;color:var(--s800)}
+main.container{padding-top:1.5rem;padding-bottom:1.5rem}
+.tarjeta{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1.5rem;box-shadow:0 20px 25px -5px rgba(6,78,59,.05),0 8px 10px -6px rgba(6,78,59,.05)}
+.tarjeta-inicio{padding:2.5rem 1.5rem}
+@media(min-width:640px){.tarjeta-inicio{padding:3.5rem 2.5rem}}
+.centrado{text-align:center;display:flex;flex-direction:column;align-items:center}
+.icono-grande{display:flex;height:4rem;width:4rem;align-items:center;justify-content:center;border-radius:1rem;background:var(--e100);color:var(--e700)}
+.icono-grande svg{width:2.25rem;height:2.25rem}
+.icono-trofeo{background:#fef3c7;color:#d97706}
+.ceja{margin-top:1.25rem;font-size:.875rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--e700)}
+.titulo{margin-top:.5rem;font-size:1.875rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.titulo{font-size:2.25rem}}
+.intro{margin-top:1rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+@media(min-width:640px){.intro{font-size:1.125rem}}
+.chips{margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.375rem;border-radius:9999px;background:var(--s100);padding:.375rem .75rem;font-size:.8125rem;font-weight:500;color:var(--s700)}
+.chip svg{width:.875rem;height:.875rem;color:var(--e600)}
+.caracteristicas{margin-top:2rem;width:100%;display:grid;gap:.75rem}
+@media(min-width:640px){.caracteristicas{grid-template-columns:repeat(3,1fr)}}
+.caracteristica{text-align:left;border:1px solid var(--s200);border-radius:1rem;background:rgba(250,250,249,.6);padding:1rem}
+.caracteristica svg{width:1.25rem;height:1.25rem;color:var(--e600)}
+.caracteristica h3{margin-top:.5rem;font-size:.875rem;font-weight:600;color:var(--s800)}
+.caracteristica p{margin-top:.25rem;font-size:.75rem;line-height:1.5;color:var(--s500)}
+.boton{display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-family:inherit;border-radius:1rem;font-weight:700;transition:all .2s ease}
+.boton-principal{margin-top:2.25rem;height:3.5rem;padding:0 2.5rem;background:var(--e600);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(5,150,105,.25)}
+.boton-principal:hover{background:var(--e700);transform:translateY(-2px);box-shadow:0 15px 20px -3px rgba(5,150,105,.3)}
+.boton-principal svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.boton-oscuro{height:3rem;padding:0 2rem;background:var(--s900);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.2)}
+.boton-oscuro:hover{background:var(--s800);transform:translateY(-2px)}
+.boton-oscuro svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.nota-pequena{margin-top:.75rem;font-size:.75rem;color:var(--s400)}
+.panel-progreso{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1rem;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.fila-progreso{display:flex;align-items:center;justify-content:space-between;font-size:.875rem;font-weight:600;color:var(--s600)}
+.aciertos{color:var(--s400)}
+.verde{color:var(--e700)}
+.barra{margin-top:.75rem;height:.625rem;background:var(--s100);border-radius:9999px;overflow:hidden}
+.barra-relleno{height:100%;width:0;background:var(--e500);border-radius:9999px;transition:width .5s ease}
+.tarjeta-pregunta{margin-top:1.25rem;padding:1.5rem}
+@media(min-width:640px){.tarjeta-pregunta{padding:2rem}}
+.etiqueta{display:inline-flex;border-radius:9999px;background:var(--e100);padding:.25rem .75rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--e700)}
+.pregunta-texto{margin-top:1rem;font-size:1.25rem;font-weight:700;line-height:1.4;color:var(--s900)}
+@media(min-width:640px){.pregunta-texto{font-size:1.5rem}}
+.opciones{margin-top:1.5rem;display:flex;flex-direction:column;gap:.75rem}
+.opcion{display:flex;width:100%;align-items:center;gap:1rem;border:2px solid var(--s200);border-radius:1rem;background:#fff;padding:1rem;text-align:left;font-family:inherit;cursor:pointer;transition:all .2s ease}
+.opcion:not(:disabled):hover{border-color:#34d399;background:rgba(236,253,245,.5);transform:translateY(-2px);box-shadow:0 4px 6px rgba(0,0,0,.06)}
+.opcion:disabled{cursor:default}
+.letra{display:flex;height:2.25rem;width:2.25rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;background:var(--s100);color:var(--s600);font-size:.875rem;font-weight:800;transition:background .2s,color .2s}
+.opcion:not(:disabled):hover .letra{background:var(--e600);color:#fff}
+.opcion .texto{flex:1;font-size:.9375rem;font-weight:500;line-height:1.4;color:var(--s800)}
+@media(min-width:640px){.opcion .texto{font-size:1rem}}
+.marca{width:1.5rem;height:1.5rem;flex-shrink:0}
+.opcion.correcta{border-color:var(--e500);background:var(--e50);box-shadow:0 4px 6px rgba(5,150,105,.1)}
+.opcion.correcta .letra{background:var(--e600);color:#fff}
+.opcion.correcta .marca{color:var(--e600)}
+.opcion.fallada{border-color:var(--r400);background:var(--r50);box-shadow:0 4px 6px rgba(225,29,72,.1)}
+.opcion.fallada .letra{background:var(--r500);color:#fff}
+.opcion.fallada .marca{color:var(--r500)}
+.opcion.apagada{border-color:var(--s200);background:#fff;opacity:.45}
+.feedback{margin-top:1.5rem;border:2px solid;border-radius:1rem;padding:1.25rem;animation:fadeUp .3s ease both}
+.feedback.fb-ok{border-color:var(--e300);background:rgba(236,253,245,.7)}
+.feedback.fb-casi{border-color:var(--a300);background:rgba(255,251,235,.7)}
+.feedback-flex{display:flex;align-items:flex-start;gap:.75rem}
+.feedback-icono{display:flex;height:2.5rem;width:2.5rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;color:#fff}
+.feedback-icono svg{width:1.5rem;height:1.5rem}
+.fb-ok .feedback-icono{background:var(--e600)}
+.fb-casi .feedback-icono{background:var(--a500)}
+.fb-titulo{font-size:1rem;font-weight:700}
+.fb-ok .fb-titulo{color:var(--e800)}
+.fb-casi .fb-titulo{color:var(--a800)}
+.fb-texto{margin-top:.375rem;font-size:.9375rem;line-height:1.625;color:var(--s700)}
+.zona-siguiente{margin-top:1.5rem;display:flex;justify-content:flex-end;animation:fadeUp .3s ease both}
+.res-titulo{margin-top:1rem;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.res-titulo{font-size:1.875rem}}
+.res-texto{margin-top:.75rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+.resultados-grid{margin-top:1.75rem;width:100%;max-width:28rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.res-caja{border:1px solid var(--s200);background:var(--s50);border-radius:1rem;padding:1.25rem}
+.res-caja-verde{border-color:var(--e200);background:var(--e50)}
+.res-num{font-size:2rem;font-weight:800;color:var(--s800)}
+.res-caja-verde .res-num{color:var(--e700)}
+.res-total{font-size:1.125rem;font-weight:700;color:var(--e400)}
+.res-etiqueta{margin-top:.25rem;font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--s500)}
+.res-caja-verde .res-etiqueta{color:var(--e600)}
+.tarjeta-repaso{margin-top:1.5rem;padding:1.5rem 1.5rem 2rem}
+@media(min-width:640px){.tarjeta-repaso{padding:2rem 2rem 2.5rem}}
+.repaso-titulo{font-size:1.125rem;font-weight:700;color:var(--s900)}
+.repaso-sub{margin-top:.25rem;font-size:.875rem;color:var(--s500)}
+.lista-repaso{margin-top:1.25rem;display:flex;flex-direction:column;gap:.75rem;max-height:24rem;overflow-y:auto;padding-right:.5rem;scrollbar-width:thin}
+.lista-repaso::-webkit-scrollbar{width:.5rem}
+.lista-repaso::-webkit-scrollbar-thumb{border-radius:9999px;background:var(--s300)}
+.repaso{border:2px solid;border-radius:1rem;padding:1rem}
+.repaso.r-ok{border-color:var(--e200);background:rgba(236,253,245,.4)}
+.repaso.r-mal{border-color:var(--r200);background:rgba(255,241,242,.4)}
+.repaso-flex{display:flex;align-items:flex-start;gap:.75rem}
+.repaso-icono{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:.125rem}
+.r-ok .repaso-icono{color:var(--e600)}
+.r-mal .repaso-icono{color:var(--r500)}
+.repaso-pregunta{font-size:.875rem;font-weight:700;color:var(--s800)}
+.repaso-correcta{margin-top:.375rem;font-size:.75rem;font-weight:600;color:var(--e700)}
+.repaso-explicacion{margin-top:.375rem;font-size:.75rem;line-height:1.5;color:var(--s600)}
+.pie{margin-top:auto;width:100%}
+.pie-inner{max-width:48rem;margin:0 auto;padding:1.5rem 1rem;text-align:center;font-size:.75rem;color:var(--s400)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.animar{animation:fadeUp .5s ease both}
+button:focus-visible{outline:2px solid var(--e600);outline-offset:2px}
+.pregunta-texto,.opcion .texto,.repaso-pregunta,.repaso-correcta,.repaso-explicacion{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="container cabecera">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
+      <span class="titulo-marca">Quiz · Pagos e impuestos</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PANTALLA DE INICIO -->
+    <section id="pantalla-inicio" class="tarjeta tarjeta-inicio animar" aria-labelledby="titulo-principal">
+      <div class="centrado">
+        <span class="icono-grande" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
+        <p class="ceja">Autoevaluación</p>
+        <h1 id="titulo-principal" class="titulo">Pagos e impuestos en WooCommerce</h1>
+        <p class="intro">Comprueba lo que has aprendido sobre los pagos y los impuestos en WooCommerce: métodos y pasarelas, IVA, base imponible, configuración fiscal, precios con y sin impuestos y compras de prueba. Responde a las 20 preguntas y descubre tu nota al instante.</p>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Métodos de pago</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Pasarelas</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>IVA y base imponible</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Impuestos en WooCommerce</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Precios con IVA</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Pruebas y seguridad</span>
+        </div>
+        <div class="caracteristicas">
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+            <h3>20 preguntas</h3>
+            <p>Tipo test con 4 opciones y una sola respuesta correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4.1 12 6"/><path d="m5.1 8-2.9-.8"/><path d="m6 12-1.9 2"/><path d="M7.2 2.2 8 5.1"/><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74 1.007l.229 4.461a.5.5 0 0 1-.898.375l-5.821-11.68Z"/></svg>
+            <h3>Feedback inmediato</h3>
+            <p>Tras cada respuesta verás la explicación de por qué es correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <h3>Sin prisa ni límite</h3>
+            <p>Sin cronómetro. Puedes repetir el quiz cuantas veces quieras.</p>
+          </div>
+        </div>
+        <button type="button" class="boton boton-principal" onclick="empezar()">
+          Empezar el quiz
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="nota-pequena">La nota final se calcula sobre 10 puntos.</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE PREGUNTA -->
+    <section id="pantalla-pregunta" hidden aria-live="polite">
+      <div class="panel-progreso">
+        <div class="fila-progreso">
+          <span id="progreso-texto"></span>
+          <span id="progreso-aciertos" class="aciertos"></span>
+        </div>
+        <div class="barra"><div id="barra-relleno" class="barra-relleno"></div></div>
+      </div>
+      <div class="tarjeta tarjeta-pregunta">
+        <span class="etiqueta" id="etiqueta-numero"></span>
+        <h2 id="texto-pregunta" class="pregunta-texto"></h2>
+        <div id="grupo-opciones" class="opciones" role="group" aria-label="Opciones de respuesta"></div>
+        <div id="caja-feedback" class="feedback" hidden role="status">
+          <div class="feedback-flex">
+            <span class="feedback-icono" id="fb-icono" aria-hidden="true"></span>
+            <div>
+              <p id="fb-titulo" class="fb-titulo"></p>
+              <p id="fb-texto" class="fb-texto"></p>
+            </div>
+          </div>
+        </div>
+        <div id="zona-siguiente" class="zona-siguiente" hidden>
+          <button type="button" class="boton boton-oscuro" id="btn-siguiente" onclick="siguiente()">Siguiente pregunta</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE RESULTADOS -->
+    <section id="pantalla-resultados" hidden aria-labelledby="res-titulo">
+      <div class="tarjeta tarjeta-inicio animar">
+        <div class="centrado">
+          <span class="icono-grande icono-trofeo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <h2 id="res-titulo" class="res-titulo"></h2>
+          <p id="res-texto" class="res-texto"></p>
+          <div class="resultados-grid">
+            <div class="res-caja res-caja-verde">
+              <p class="res-num"><span id="res-aciertos"></span> <span class="res-total" id="res-total"></span></p>
+              <p class="res-etiqueta">Respuestas correctas</p>
+            </div>
+            <div class="res-caja">
+              <p class="res-num" id="res-nota"></p>
+              <p class="res-etiqueta">Nota final (sobre 10)</p>
+            </div>
+          </div>
+          <button type="button" class="boton boton-principal" onclick="empezar()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:0;margin-right:.5rem"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reintentar el quiz
+          </button>
+          <p class="nota-pequena">En cada intento las opciones se mezclan para que no te aprendas las letras.</p>
+        </div>
+      </div>
+      <div class="tarjeta tarjeta-repaso">
+        <h3 class="repaso-titulo">Repaso de todas las preguntas</h3>
+        <p class="repaso-sub">Lee las explicaciones de las que fallaste antes de volver a intentarlo.</p>
+        <ol id="lista-repaso" class="lista-repaso"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="pie-inner">Quiz de autoevaluación · Pagos e impuestos en WooCommerce · Recurso didáctico para el aula</div>
+  </footer>
+</div>
+<script>
+'use strict';
+/* ================= BANCO DE PREGUNTAS =================
+   Puedes editar este bloque para añadir, quitar o cambiar preguntas.
+   En cada pregunta: opciones (4), correcta = índice de la correcta (0-3),
+   explicacion = texto que se muestra tras responder. */
+var PREGUNTAS = [
+  {
+    pregunta: '¿Qué diferencia existe entre un método de pago y una pasarela de pago?',
+    opciones: [
+      'El método es la opción que elige el cliente (tarjeta, transferencia...); la pasarela es el servicio que procesa el pago',
+      'El método procesa el cobro y la pasarela solo muestra el botón de compra',
+      'Son sinónimos: cualquier método de pago es una pasarela',
+      'La pasarela solo existe para pagos contra reembolso'
+    ],
+    correcta: 0,
+    explicacion: 'El método de pago es lo que elige el cliente: tarjeta, transferencia, PayPal o contra reembolso. La pasarela es el servicio o plugin que procesa ese cobro de forma segura (Stripe, PayPal, Redsys...).'
+  },
+  {
+    pregunta: '¿Qué es Stripe?',
+    opciones: [
+      'Un tema de WordPress para tiendas',
+      'Una pasarela de pago que permite cobrar con tarjeta y otros métodos online',
+      'Un plugin de envíos',
+      'Un tipo de IVA reducido'
+    ],
+    correcta: 1,
+    explicacion: 'Stripe es una pasarela de pago online que permite cobrar con tarjeta y otros métodos, gestionar reembolsos y trabajar en modo de prueba. Se conecta con WooCommerce mediante su plugin oficial.'
+  },
+  {
+    pregunta: '¿Qué es PayPal y para qué sirve?',
+    opciones: [
+      'Un servicio de pago online que permite pagar con saldo, tarjeta o cuenta bancaria',
+      'Un transportista para envíos contra reembolso',
+      'Un plugin de copias de seguridad',
+      'Un impuesto que se suma al precio'
+    ],
+    correcta: 0,
+    explicacion: 'PayPal es un servicio de pago online: el cliente puede pagar con su saldo de PayPal, con tarjeta o con cuenta bancaria. En WooCommerce se integra como pasarela de pago para cobrar en la tienda.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre transferencia bancaria y pago con tarjeta?',
+    opciones: [
+      'La transferencia es manual y tarda en confirmarse; la tarjeta se procesa online al instante',
+      'La tarjeta es manual y la transferencia automática',
+      'Las dos son siempre instantáneas',
+      'La transferencia solo funciona en tiendas físicas'
+    ],
+    correcta: 0,
+    explicacion: 'La transferencia bancaria es un pago manual: el cliente hace la transferencia y la tienda debe comprobar el ingreso antes de procesar el pedido. El pago con tarjeta lo procesa una pasarela online y suele confirmarse al instante, aunque puede pedir autenticación 3D Secure.'
+  },
+  {
+    pregunta: '¿Qué significa contra reembolso?',
+    opciones: [
+      'Que el cliente paga cuando recibe el pedido, al transportista',
+      'Que el cliente paga antes de que se prepare el pedido',
+      'Que el pago se hace con transferencia bancaria',
+      'Que el pedido se envía sin cargo'
+    ],
+    correcta: 0,
+    explicacion: 'Contra reembolso es un método de pago en el que el cliente paga al recibir el pedido, normalmente al transportista. Es un pago offline y tiene riesgos: rechazos en la entrega, devoluciones y comisiones del transporte.'
+  },
+  {
+    pregunta: '¿Qué es el IVA?',
+    opciones: [
+      'Un impuesto indirecto que se aplica al consumo y se suma al precio de los productos y servicios',
+      'Un descuento que aplica la tienda a los clientes',
+      'Una comisión que cobra la pasarela de pago',
+      'Un gasto de envío que paga el transportista'
+    ],
+    correcta: 0,
+    explicacion: 'El IVA (Impuesto sobre el Valor Añadido) es un impuesto indirecto sobre el consumo. La empresa lo repercute al cliente en el precio y después lo declara e ingresa a la administración tributaria.'
+  },
+  {
+    pregunta: '¿Qué significa base imponible?',
+    opciones: [
+      'El importe sobre el que se calculan los impuestos, antes de añadir el IVA',
+      'El precio final que paga el cliente con impuestos incluidos',
+      'El coste del envío',
+      'El total de la factura con descuentos'
+    ],
+    correcta: 0,
+    explicacion: 'La base imponible es la cantidad sobre la que se calcula el impuesto. El IVA se obtiene multiplicando la base imponible por el tipo de IVA, y el precio final es la base más el IVA.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre un precio con IVA y un precio sin IVA?',
+    opciones: [
+      'El precio con IVA incluye el impuesto; el precio sin IVA no lo incluye y se añade después',
+      'El precio con IVA no lleva impuesto y el sin IVA sí',
+      'Son siempre iguales',
+      'El precio sin IVA solo existe en las facturas'
+    ],
+    correcta: 0,
+    explicacion: 'Un precio con IVA incluye el impuesto en la cantidad mostrada; un precio sin IVA es la base imponible y el IVA se añade al calcular el total. En España, los precios de venta al público suelen mostrarse con IVA incluido.'
+  },
+  {
+    pregunta: '¿Cuál es el tipo general de IVA utilizado en los ejemplos de esta práctica?',
+    opciones: [
+      '4 %',
+      '10 %',
+      '21 %',
+      '25 %'
+    ],
+    correcta: 2,
+    explicacion: 'El tipo general de IVA en España es el 21 %. Existen tipos reducidos, como el 10 % y el 4 %, para determinados productos y servicios, pero en los ejemplos de la práctica usamos el tipo general del 21 %.'
+  },
+  {
+    pregunta: '¿Dónde se activan los impuestos en WooCommerce?',
+    opciones: [
+      'En WooCommerce → Ajustes → Impuestos',
+      'En Apariencia → Temas',
+      'En Entradas → Categorías',
+      'En Usuarios → Añadir nuevo'
+    ],
+    correcta: 0,
+    explicacion: 'Los impuestos se activan y configuran en WooCommerce → Ajustes → Impuestos. Desde ahí puedes habilitar los impuestos, indicar cómo se introducen y se muestran los precios y acceder a las tarifas.'
+  },
+  {
+    pregunta: '¿Dónde se configuran las tarifas fiscales?',
+    opciones: [
+      'En WooCommerce → Ajustes → Impuestos → Tarifas',
+      'En Ajustes → Generales',
+      'En la pantalla de cada pedido',
+      'En Apariencia → Personalizar'
+    ],
+    correcta: 0,
+    explicacion: 'Las tarifas fiscales se configuran en WooCommerce → Ajustes → Impuestos → Tarifas. Ahí se definen los tipos por país, zona o clase de impuesto; las tarifas estándar se aplican a los productos imponibles.'
+  },
+  {
+    pregunta: '¿Qué significa que un producto tenga el estado «Imponible»?',
+    opciones: [
+      'Que se le aplican los impuestos configurados en la tienda',
+      'Que no se le aplica ningún impuesto',
+      'Que solo se aplica el impuesto al envío',
+      'Que es un producto gratuito'
+    ],
+    correcta: 0,
+    explicacion: 'El estado fiscal «Imponible» indica que al producto se le aplican los impuestos que correspondan según su clase y la zona. Las otras opciones habituales son «Solo envío» y «Ninguno», que no aplican impuestos al producto.'
+  },
+  {
+    pregunta: '¿Qué diferencia existe entre mostrar los precios con impuestos incluidos y sin impuestos?',
+    opciones: [
+      'Con impuestos incluidos el precio mostrado ya lleva el IVA; sin impuestos se muestra la base y el IVA se añade en el checkout',
+      'Mostrar sin impuestos significa que la tienda no cobra IVA',
+      'Con impuestos incluidos el IVA se elimina del pedido',
+      'No hay diferencia en el importe final'
+    ],
+    correcta: 0,
+    explicacion: 'La opción de visualización decide si el catálogo y el carrito muestran el precio final con IVA o la base imponible. El importe total del pedido debe ser el mismo, pero cambia lo que ve el cliente y cómo interpreta el precio.'
+  },
+  {
+    pregunta: '¿Por qué debemos realizar compras de prueba antes de publicar una tienda?',
+    opciones: [
+      'Para comprobar que los pagos, impuestos, envíos, correos y estados del pedido funcionan correctamente',
+      'Para aumentar el número de pedidos reales',
+      'Para cambiar el tema de la tienda',
+      'Para borrar los productos que no se venden'
+    ],
+    correcta: 0,
+    explicacion: 'Las compras de prueba permiten detectar errores antes de que afecten a clientes reales: métodos de pago mal configurados, impuestos incorrectos, gastos de envío equivocados, correos que no llegan o estados que no avanzan. Se hacen en modo de prueba y con pedidos que luego se eliminan.'
+  },
+  {
+    pregunta: '¿Por qué no debemos utilizar datos de tarjetas reales en un entorno de pruebas?',
+    opciones: [
+      'Porque es un riesgo de seguridad y de cumplimiento; hay que usar tarjetas de prueba del modo sandbox',
+      'Porque las tarjetas reales no funcionan en WooCommerce',
+      'Porque el modo de prueba cobra el doble',
+      'Porque las tarjetas reales solo valen para transferencias'
+    ],
+    correcta: 0,
+    explicacion: 'Usar datos reales en pruebas expone información sensible y puede incumplir las normas de seguridad de tarjetas (PCI DSS). Las pasarelas ofrecen un modo de prueba con tarjetas ficticias para simular pagos sin mover dinero real.'
+  },
+  {
+    pregunta: 'Caso: un producto cuesta 100 € sin IVA y el tipo general es del 21 %. ¿Cuánto paga el cliente?',
+    opciones: [
+      '100 €',
+      '110 €',
+      '121 €',
+      '79 €'
+    ],
+    correcta: 2,
+    explicacion: 'El IVA se calcula sobre la base imponible: 100 € × 21 % = 21 €. El precio final es 100 € + 21 € = 121 €. Si el precio de 100 € ya incluyera IVA, la base sería aproximadamente 82,64 € y el IVA 17,36 €.'
+  },
+  {
+    pregunta: 'Caso: la tienda muestra los precios sin IVA y el cliente se sorprende al llegar al checkout. ¿Qué ajuste revisarías?',
+    opciones: [
+      'La opción de mostrar los precios con impuestos incluidos en WooCommerce → Ajustes → Impuestos',
+      'El color del botón de compra',
+      'La contraseña del administrador',
+      'El número de productos por página'
+    ],
+    correcta: 0,
+    explicacion: 'Si el cliente ve un precio en el catálogo y otro con IVA en el checkout, revisa cómo se muestran y cómo se introducen los precios en WooCommerce → Ajustes → Impuestos. En tiendas minoristas suele ser recomendable mostrar los precios con impuestos incluidos para evitar sorpresas.'
+  },
+  {
+    pregunta: '¿Qué son las clases de impuestos y para qué sirven?',
+    opciones: [
+      'Grupos de productos a los que se aplican tipos de IVA distintos (estándar, reducido, cero...)',
+      'Categorías de pedidos para organizar los envíos',
+      'Métodos de pago alternativos a la tarjeta',
+      'Niveles de usuario del panel de WordPress'
+    ],
+    correcta: 0,
+    explicacion: 'Las clases de impuestos agrupan productos que comparten un mismo tratamiento fiscal. Así puedes aplicar el tipo general, un tipo reducido o un tipo cero a distintos productos sin crear una tarifa para cada uno. Se gestionan en WooCommerce → Ajustes → Impuestos.'
+  },
+  {
+    pregunta: '¿Qué es el modo de prueba (sandbox) de una pasarela de pago?',
+    opciones: [
+      'Un entorno de pruebas con credenciales y tarjetas ficticias para simular pagos sin mover dinero real',
+      'Un descuento especial para los primeros pedidos',
+      'Una pasarela que solo acepta transferencias',
+      'Un impuesto que se aplica a las pruebas'
+    ],
+    correcta: 0,
+    explicacion: 'El modo de prueba o sandbox permite simular pagos con datos ficticios y comprobar qué ocurre con pagos aprobados, rechazados o reembolsados sin cobrar de verdad. Es imprescindible para validar la tienda antes de activar el modo real.'
+  },
+  {
+    pregunta: '¿Qué riesgos tiene una configuración fiscal incorrecta antes de publicar la tienda?',
+    opciones: [
+      'Cobrar precios o impuestos equivocados, perder dinero, incumplir obligaciones fiscales y dañar la confianza del cliente',
+      'Que cambie el color del tema',
+      'Que desaparezcan los productos del catálogo',
+      'Que la tienda deje de necesitar pasarela de pago'
+    ],
+    correcta: 0,
+    explicacion: 'Una configuración fiscal incorrecta puede hacer que cobres de menos o de más, que las facturas no cuadren y que incumplas obligaciones fiscales. Antes de publicar hay que revisar tipos, clases, precios con o sin IVA y hacer compras de prueba.'
+  }
+];
+
+/* ================= LÓGICA DEL QUIZ ================= */
+var LETRAS = ['A', 'B', 'C', 'D'];
+var preguntas = [], actual = 0, seleccionada = null, respuestas = [];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function iconoSvg(nombre) {
+  var rutas = {
+    'check': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>',
+    'cruz': '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+    'bombilla': '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+    'flecha': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
+  };
+  return '<svg class="marca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + rutas[nombre] + '</svg>';
+}
+
+function mezclar(lista) {
+  return lista.map(function (q) {
+    var idx = q.opciones.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    return { pregunta: q.pregunta, opciones: idx.map(function (i) { return q.opciones[i]; }), correcta: idx.indexOf(q.correcta), explicacion: q.explicacion };
+  });
+}
+
+function mostrar(nombre) {
+  ['inicio', 'pregunta', 'resultados'].forEach(function (s) {
+    $('pantalla-' + s).hidden = (s !== nombre);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function aciertos() {
+  var n = 0;
+  for (var i = 0; i < preguntas.length; i++) {
+    if (respuestas[i] !== undefined && respuestas[i] === preguntas[i].correcta) n++;
+  }
+  return n;
+}
+
+function pintarProgreso() {
+  var total = preguntas.length;
+  $('progreso-texto').innerHTML = 'Pregunta <span class="verde">' + (actual + 1) + '</span> de ' + total;
+  $('progreso-aciertos').textContent = aciertos() + ' aciertos hasta ahora';
+  $('etiqueta-numero').textContent = 'Pregunta ' + (actual + 1);
+  var pct = ((actual + (seleccionada !== null ? 1 : 0)) / total) * 100;
+  $('barra-relleno').style.width = pct + '%';
+  $('barra-relleno').setAttribute('aria-label', 'Progreso: pregunta ' + (actual + 1) + ' de ' + total);
+}
+
+function pintarPregunta() {
+  var q = preguntas[actual];
+  seleccionada = null;
+  $('texto-pregunta').textContent = q.pregunta;
+  $('grupo-opciones').innerHTML = q.opciones.map(function (op, i) {
+    return '<button type="button" class="opcion" data-i="' + i + '" onclick="seleccionar(' + i + ')">' +
+      '<span class="letra">' + LETRAS[i] + '</span>' +
+      '<span class="texto">' + esc(op) + '</span>' +
+      '</button>';
+  }).join('');
+  $('caja-feedback').hidden = true;
+  $('zona-siguiente').hidden = true;
+  pintarProgreso();
+}
+
+function empezar() {
+  preguntas = mezclar(PREGUNTAS);
+  actual = 0;
+  respuestas = [];
+  mostrar('pregunta');
+  pintarPregunta();
+}
+
+function seleccionar(i) {
+  if (seleccionada !== null) return;
+  seleccionada = i;
+  respuestas[actual] = i;
+  var q = preguntas[actual];
+  var botones = document.querySelectorAll('#grupo-opciones .opcion');
+  botones.forEach(function (b, idx) {
+    b.disabled = true;
+    if (idx === q.correcta) { b.classList.add('correcta'); b.insertAdjacentHTML('beforeend', iconoSvg('check')); }
+    else if (idx === i) { b.classList.add('fallada'); b.insertAdjacentHTML('beforeend', iconoSvg('cruz')); }
+    else { b.classList.add('apagada'); }
+  });
+  var ok = (i === q.correcta);
+  var caja = $('caja-feedback');
+  caja.className = 'feedback ' + (ok ? 'fb-ok' : 'fb-casi');
+  $('fb-icono').innerHTML = iconoSvg(ok ? 'check' : 'bombilla');
+  $('fb-titulo').textContent = ok ? '¡Correcto, muy bien!' : 'Casi. La respuesta correcta es la ' + LETRAS[q.correcta] + '.';
+  $('fb-texto').textContent = q.explicacion;
+  caja.hidden = false;
+  $('btn-siguiente').innerHTML = (actual === preguntas.length - 1 ? 'Ver mi resultado' : 'Siguiente pregunta') +
+    ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;margin-left:.5rem"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  $('zona-siguiente').hidden = false;
+  pintarProgreso();
+}
+
+function siguiente() {
+  if (actual === preguntas.length - 1) {
+    pintarResultados();
+    mostrar('resultados');
+  } else {
+    actual++;
+    pintarPregunta();
+  }
+}
+
+function mensajeResultado(pct) {
+  if (pct === 100) return { t: '¡Puntuación perfecta!', x: 'Has acertado todas las preguntas. Dominas los pagos y los impuestos en WooCommerce: métodos, pasarelas, IVA y configuración fiscal.' };
+  if (pct >= 75) return { t: '¡Excelente trabajo!', x: 'Tienes muy claros los métodos de pago, el IVA y la configuración fiscal. Repasa las preguntas falladas y estarás perfecto.' };
+  if (pct >= 50) return { t: '¡Buen trabajo!', x: 'Vas por buen camino. Lee con calma las explicaciones de este repaso y vuelve a intentarlo para subir la nota.' };
+  return { t: 'Sigue practicando', x: 'No te preocupes: lo importante es aprender. Revisa las explicaciones de abajo, repasa cómo se calculan y se configuran los impuestos y vuelve a intentarlo.' };
+}
+
+function pintarResultados() {
+  var total = preguntas.length, ok = aciertos();
+  var pct = (ok / total) * 100;
+  var nota = (ok / total * 10).toFixed(1).replace('.', ',');
+  var m = mensajeResultado(pct);
+  $('res-titulo').textContent = m.t;
+  $('res-texto').textContent = m.x;
+  $('res-aciertos').textContent = ok;
+  $('res-total').textContent = '/ ' + total;
+  $('res-nota').textContent = nota;
+  $('lista-repaso').innerHTML = preguntas.map(function (q, i) {
+    var bien = (respuestas[i] === q.correcta);
+    return '<li class="repaso ' + (bien ? 'r-ok' : 'r-mal') + '">' +
+      '<div class="repaso-flex">' +
+      '<span class="repaso-icono">' + iconoSvg(bien ? 'check' : 'cruz') + '</span>' +
+      '<div style="min-width:0">' +
+      '<p class="repaso-pregunta">' + (i + 1) + '. ' + esc(q.pregunta) + '</p>' +
+      (bien ? '' : '<p class="repaso-correcta">Respuesta correcta: ' + esc(q.opciones[q.correcta]) + '</p>') +
+      '<p class="repaso-explicacion">' + esc(q.explicacion) + '</p>' +
+      '</div></div></li>';
+  }).join('');
+}
+</script>
+</body>
+</html>

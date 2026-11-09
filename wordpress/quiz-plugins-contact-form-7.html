@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de autoevaluación · Plugins y Contact Form 7</title>
+<meta name="description" content="Quiz interactivo de autoevaluación sobre los plugins de WordPress y Contact Form 7: qué es un plugin, instalar, activar, desactivar, shortcodes, pestañas Formulario y Correo, y seguridad. 15 preguntas con feedback inmediato.">
+<style>
+:root{
+  --e50:#ecfdf5;--e100:#d1fae5;--e200:#a7f3d0;--e300:#6ee7b7;--e400:#34d399;--e500:#10b981;--e600:#059669;--e700:#047857;--e800:#065f46;
+  --a50:#fffbeb;--a300:#fcd34d;--a500:#f59e0b;--a800:#92400e;
+  --r50:#fff1f2;--r200:#fecdd3;--r400:#fb7185;--r500:#f43f5e;
+  --s50:#fafaf9;--s100:#f5f5f4;--s200:#e7e5e4;--s300:#d6d3d1;--s400:#a8a29e;--s500:#78716c;--s600:#57534e;--s700:#44403c;--s800:#292524;--s900:#1c1917;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--s900);background:#fff;-webkit-font-smoothing:antialiased}
+.page{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--s50) 0%,#fff 45%,rgba(236,253,245,.65) 100%)}
+.container{width:100%;max-width:48rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+.cabecera{display:flex;align-items:center;justify-content:center;gap:.625rem;padding:2rem 0 .5rem}
+.logo{display:flex;height:2.25rem;width:2.25rem;align-items:center;justify-content:center;border-radius:.75rem;background:var(--e600);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.logo svg{width:1.25rem;height:1.25rem}
+.titulo-marca{font-size:1.125rem;font-weight:700;letter-spacing:-.01em;color:var(--s800)}
+.volver-barra{display:flex;padding-top:1.25rem}
+.volver{display:inline-flex;align-items:center;gap:.375rem;border-radius:.5rem;padding:.35rem .6rem;margin-left:-.6rem;font-size:.8125rem;font-weight:600;color:var(--s500);text-decoration:none;transition:color .2s,background .2s}
+.volver:hover{color:var(--e700);background:var(--e50)}
+.volver:focus-visible{outline:2px solid var(--e600);outline-offset:2px}
+.volver svg{width:.875rem;height:.875rem}
+main.container{padding-top:1.5rem;padding-bottom:1.5rem}
+.tarjeta{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1.5rem;box-shadow:0 20px 25px -5px rgba(6,78,59,.05),0 8px 10px -6px rgba(6,78,59,.05)}
+.tarjeta-inicio{padding:2.5rem 1.5rem}
+@media(min-width:640px){.tarjeta-inicio{padding:3.5rem 2.5rem}}
+.centrado{text-align:center;display:flex;flex-direction:column;align-items:center}
+.icono-grande{display:flex;height:4rem;width:4rem;align-items:center;justify-content:center;border-radius:1rem;background:var(--e100);color:var(--e700)}
+.icono-grande svg{width:2.25rem;height:2.25rem}
+.icono-trofeo{background:#fef3c7;color:#d97706}
+.ceja{margin-top:1.25rem;font-size:.875rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--e700)}
+.titulo{margin-top:.5rem;font-size:1.875rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.titulo{font-size:2.25rem}}
+.intro{margin-top:1rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+@media(min-width:640px){.intro{font-size:1.125rem}}
+.chips{margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.375rem;border-radius:9999px;background:var(--s100);padding:.375rem .75rem;font-size:.8125rem;font-weight:500;color:var(--s700)}
+.chip svg{width:.875rem;height:.875rem;color:var(--e600)}
+.caracteristicas{margin-top:2rem;width:100%;display:grid;gap:.75rem}
+@media(min-width:640px){.caracteristicas{grid-template-columns:repeat(3,1fr)}}
+.caracteristica{text-align:left;border:1px solid var(--s200);border-radius:1rem;background:rgba(250,250,249,.6);padding:1rem}
+.caracteristica svg{width:1.25rem;height:1.25rem;color:var(--e600)}
+.caracteristica h3{margin-top:.5rem;font-size:.875rem;font-weight:600;color:var(--s800)}
+.caracteristica p{margin-top:.25rem;font-size:.75rem;line-height:1.5;color:var(--s500)}
+.boton{display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-family:inherit;border-radius:1rem;font-weight:700;transition:all .2s ease}
+.boton-principal{margin-top:2.25rem;height:3.5rem;padding:0 2.5rem;background:var(--e600);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(5,150,105,.25)}
+.boton-principal:hover{background:var(--e700);transform:translateY(-2px);box-shadow:0 15px 20px -3px rgba(5,150,105,.3)}
+.boton-principal svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.boton-oscuro{height:3rem;padding:0 2rem;background:var(--s900);color:#fff;font-size:1rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.2)}
+.boton-oscuro:hover{background:var(--s800);transform:translateY(-2px)}
+.boton-oscuro svg{width:1.25rem;height:1.25rem;margin-left:.5rem}
+.nota-pequena{margin-top:.75rem;font-size:.75rem;color:var(--s400)}
+.panel-progreso{background:#fff;border:1px solid rgba(231,229,228,.8);border-radius:1rem;padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.fila-progreso{display:flex;align-items:center;justify-content:space-between;font-size:.875rem;font-weight:600;color:var(--s600)}
+.aciertos{color:var(--s400)}
+.verde{color:var(--e700)}
+.barra{margin-top:.75rem;height:.625rem;background:var(--s100);border-radius:9999px;overflow:hidden}
+.barra-relleno{height:100%;width:0;background:var(--e500);border-radius:9999px;transition:width .5s ease}
+.tarjeta-pregunta{margin-top:1.25rem;padding:1.5rem}
+@media(min-width:640px){.tarjeta-pregunta{padding:2rem}}
+.etiqueta{display:inline-flex;border-radius:9999px;background:var(--e100);padding:.25rem .75rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--e700)}
+.pregunta-texto{margin-top:1rem;font-size:1.25rem;font-weight:700;line-height:1.4;color:var(--s900)}
+@media(min-width:640px){.pregunta-texto{font-size:1.5rem}}
+.opciones{margin-top:1.5rem;display:flex;flex-direction:column;gap:.75rem}
+.opcion{display:flex;width:100%;align-items:center;gap:1rem;border:2px solid var(--s200);border-radius:1rem;background:#fff;padding:1rem;text-align:left;font-family:inherit;cursor:pointer;transition:all .2s ease}
+.opcion:not(:disabled):hover{border-color:#34d399;background:rgba(236,253,245,.5);transform:translateY(-2px);box-shadow:0 4px 6px rgba(0,0,0,.06)}
+.opcion:disabled{cursor:default}
+.letra{display:flex;height:2.25rem;width:2.25rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;background:var(--s100);color:var(--s600);font-size:.875rem;font-weight:800;transition:background .2s,color .2s}
+.opcion:not(:disabled):hover .letra{background:var(--e600);color:#fff}
+.opcion .texto{flex:1;font-size:.9375rem;font-weight:500;line-height:1.4;color:var(--s800)}
+@media(min-width:640px){.opcion .texto{font-size:1rem}}
+.marca{width:1.5rem;height:1.5rem;flex-shrink:0}
+.opcion.correcta{border-color:var(--e500);background:var(--e50);box-shadow:0 4px 6px rgba(5,150,105,.1)}
+.opcion.correcta .letra{background:var(--e600);color:#fff}
+.opcion.correcta .marca{color:var(--e600)}
+.opcion.fallada{border-color:var(--r400);background:var(--r50);box-shadow:0 4px 6px rgba(225,29,72,.1)}
+.opcion.fallada .letra{background:var(--r500);color:#fff}
+.opcion.fallada .marca{color:var(--r500)}
+.opcion.apagada{border-color:var(--s200);background:#fff;opacity:.45}
+.feedback{margin-top:1.5rem;border:2px solid;border-radius:1rem;padding:1.25rem;animation:fadeUp .3s ease both}
+.feedback.fb-ok{border-color:var(--e300);background:rgba(236,253,245,.7)}
+.feedback.fb-casi{border-color:var(--a300);background:rgba(255,251,235,.7)}
+.feedback-flex{display:flex;align-items:flex-start;gap:.75rem}
+.feedback-icono{display:flex;height:2.5rem;width:2.5rem;flex-shrink:0;align-items:center;justify-content:center;border-radius:.75rem;color:#fff}
+.feedback-icono svg{width:1.5rem;height:1.5rem}
+.fb-ok .feedback-icono{background:var(--e600)}
+.fb-casi .feedback-icono{background:var(--a500)}
+.fb-titulo{font-size:1rem;font-weight:700}
+.fb-ok .fb-titulo{color:var(--e800)}
+.fb-casi .fb-titulo{color:var(--a800)}
+.fb-texto{margin-top:.375rem;font-size:.9375rem;line-height:1.625;color:var(--s700)}
+.zona-siguiente{margin-top:1.5rem;display:flex;justify-content:flex-end;animation:fadeUp .3s ease both}
+.res-titulo{margin-top:1rem;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--s900)}
+@media(min-width:640px){.res-titulo{font-size:1.875rem}}
+.res-texto{margin-top:.75rem;max-width:36rem;font-size:1rem;line-height:1.625;color:var(--s600)}
+.resultados-grid{margin-top:1.75rem;width:100%;max-width:28rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.res-caja{border:1px solid var(--s200);background:var(--s50);border-radius:1rem;padding:1.25rem}
+.res-caja-verde{border-color:var(--e200);background:var(--e50)}
+.res-num{font-size:2rem;font-weight:800;color:var(--s800)}
+.res-caja-verde .res-num{color:var(--e700)}
+.res-total{font-size:1.125rem;font-weight:700;color:var(--e400)}
+.res-etiqueta{margin-top:.25rem;font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--s500)}
+.res-caja-verde .res-etiqueta{color:var(--e600)}
+.tarjeta-repaso{margin-top:1.5rem;padding:1.5rem 1.5rem 2rem}
+@media(min-width:640px){.tarjeta-repaso{padding:2rem 2rem 2.5rem}}
+.repaso-titulo{font-size:1.125rem;font-weight:700;color:var(--s900)}
+.repaso-sub{margin-top:.25rem;font-size:.875rem;color:var(--s500)}
+.lista-repaso{margin-top:1.25rem;display:flex;flex-direction:column;gap:.75rem;max-height:24rem;overflow-y:auto;padding-right:.5rem;scrollbar-width:thin}
+.lista-repaso::-webkit-scrollbar{width:.5rem}
+.lista-repaso::-webkit-scrollbar-thumb{border-radius:9999px;background:var(--s300)}
+.repaso{border:2px solid;border-radius:1rem;padding:1rem}
+.repaso.r-ok{border-color:var(--e200);background:rgba(236,253,245,.4)}
+.repaso.r-mal{border-color:var(--r200);background:rgba(255,241,242,.4)}
+.repaso-flex{display:flex;align-items:flex-start;gap:.75rem}
+.repaso-icono{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:.125rem}
+.r-ok .repaso-icono{color:var(--e600)}
+.r-mal .repaso-icono{color:var(--r500)}
+.repaso-pregunta{font-size:.875rem;font-weight:700;color:var(--s800)}
+.repaso-correcta{margin-top:.375rem;font-size:.75rem;font-weight:600;color:var(--e700)}
+.repaso-explicacion{margin-top:.375rem;font-size:.75rem;line-height:1.5;color:var(--s600)}
+.pie{margin-top:auto;width:100%}
+.pie-inner{max-width:48rem;margin:0 auto;padding:1.5rem 1rem;text-align:center;font-size:.75rem;color:var(--s400)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.animar{animation:fadeUp .5s ease both}
+button:focus-visible{outline:2px solid var(--e600);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="container volver-barra">
+      <a class="volver" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Volver al inicio
+      </a>
+    </div>
+    <div class="container cabecera">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+      <span class="titulo-marca">Quiz · Plugins y Contact Form 7</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PANTALLA DE INICIO -->
+    <section id="pantalla-inicio" class="tarjeta tarjeta-inicio animar" aria-labelledby="titulo-principal">
+      <div class="centrado">
+        <span class="icono-grande" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg></span>
+        <p class="ceja">Autoevaluación</p>
+        <h1 id="titulo-principal" class="titulo">Plugins y Contact Form 7</h1>
+        <p class="intro">Comprueba lo que has aprendido sobre los plugins de WordPress y sobre los formularios de contacto con Contact Form 7. Responde a las 15 preguntas y descubre tu nota al instante.</p>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>¿Qué es un plugin?</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Instalar y activar</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Contact Form 7</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Shortcodes</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Pestaña Correo</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Seguridad y mantenimiento</span>
+        </div>
+        <div class="caracteristicas">
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+            <h3>15 preguntas</h3>
+            <p>Tipo test con 4 opciones y una sola respuesta correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4.1 12 6"/><path d="m5.1 8-2.9-.8"/><path d="m6 12-1.9 2"/><path d="M7.2 2.2 8 5.1"/><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74 1.007l.229 4.461a.5.5 0 0 1-.898.375l-5.821-11.68Z"/></svg>
+            <h3>Feedback inmediato</h3>
+            <p>Tras cada respuesta verás la explicación de por qué es correcta.</p>
+          </div>
+          <div class="caracteristica">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <h3>Sin prisa ni límite</h3>
+            <p>Sin cronómetro. Puedes repetir el quiz cuantas veces quieras.</p>
+          </div>
+        </div>
+        <button type="button" class="boton boton-principal" onclick="empezar()">
+          Empezar el quiz
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="nota-pequena">La nota final se calcula sobre 10 puntos.</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE PREGUNTA -->
+    <section id="pantalla-pregunta" hidden aria-live="polite">
+      <div class="panel-progreso">
+        <div class="fila-progreso">
+          <span id="progreso-texto"></span>
+          <span id="progreso-aciertos" class="aciertos"></span>
+        </div>
+        <div class="barra"><div id="barra-relleno" class="barra-relleno"></div></div>
+      </div>
+      <div class="tarjeta tarjeta-pregunta">
+        <span class="etiqueta" id="etiqueta-numero"></span>
+        <h2 id="texto-pregunta" class="pregunta-texto"></h2>
+        <div id="grupo-opciones" class="opciones" role="group" aria-label="Opciones de respuesta"></div>
+        <div id="caja-feedback" class="feedback" hidden role="status">
+          <div class="feedback-flex">
+            <span class="feedback-icono" id="fb-icono" aria-hidden="true"></span>
+            <div>
+              <p id="fb-titulo" class="fb-titulo"></p>
+              <p id="fb-texto" class="fb-texto"></p>
+            </div>
+          </div>
+        </div>
+        <div id="zona-siguiente" class="zona-siguiente" hidden>
+          <button type="button" class="boton boton-oscuro" id="btn-siguiente" onclick="siguiente()">Siguiente pregunta</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANTALLA DE RESULTADOS -->
+    <section id="pantalla-resultados" hidden aria-labelledby="res-titulo">
+      <div class="tarjeta tarjeta-inicio animar">
+        <div class="centrado">
+          <span class="icono-grande icono-trofeo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <h2 id="res-titulo" class="res-titulo"></h2>
+          <p id="res-texto" class="res-texto"></p>
+          <div class="resultados-grid">
+            <div class="res-caja res-caja-verde">
+              <p class="res-num"><span id="res-aciertos"></span> <span class="res-total" id="res-total"></span></p>
+              <p class="res-etiqueta">Respuestas correctas</p>
+            </div>
+            <div class="res-caja">
+              <p class="res-num" id="res-nota"></p>
+              <p class="res-etiqueta">Nota final (sobre 10)</p>
+            </div>
+          </div>
+          <button type="button" class="boton boton-principal" onclick="empezar()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:0;margin-right:.5rem"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reintentar el quiz
+          </button>
+          <p class="nota-pequena">En cada intento las opciones se mezclan para que no te aprendas las letras.</p>
+        </div>
+      </div>
+      <div class="tarjeta tarjeta-repaso">
+        <h3 class="repaso-titulo">Repaso de todas las preguntas</h3>
+        <p class="repaso-sub">Lee las explicaciones de las que fallaste antes de volver a intentarlo.</p>
+        <ol id="lista-repaso" class="lista-repaso"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="pie-inner">Quiz de autoevaluación · Plugins y Contact Form 7 · Recurso didáctico para el aula</div>
+  </footer>
+</div>
+<script>
+'use strict';
+/* ================= BANCO DE PREGUNTAS =================
+   Puedes editar este bloque para añadir, quitar o cambiar preguntas.
+   En cada pregunta: opciones (4), correcta = índice de la correcta (0-3),
+   explicacion = texto que se muestra tras responder. */
+var PREGUNTAS = [
+  {
+    pregunta: '¿Qué es un plugin de WordPress?',
+    opciones: [
+      'Un programa que se instala en el ordenador, junto a XAMPP',
+      'Un componente que añade funcionalidades nuevas a la web sin necesidad de programar',
+      'La plantilla que cambia el aspecto visual de la web',
+      'Una copia de seguridad automática del contenido'
+    ],
+    correcta: 1,
+    explicacion: 'Un plugin es como una "app" para tu WordPress: cada uno añade una función concreta (formularios, tienda, SEO, seguridad...) sin tocar código. Si el tema viste la web, los plugins le añaden capacidades.'
+  },
+  {
+    pregunta: '¿Qué diferencia hay entre un tema y un plugin?',
+    opciones: [
+      'Ninguna: los dos hacen lo mismo',
+      'El plugin controla el diseño y el tema añade funciones',
+      'El tema controla el aspecto de la web; el plugin añade funcionalidades',
+      'Los temas son de pago y los plugins siempre gratuitos'
+    ],
+    correcta: 2,
+    explicacion: 'El tema se encarga de la presentación (colores, tipografías, disposición) y los plugins, de las funciones (formularios, calendarios, tiendas...). Por eso un cambio de tema no te quita los plugins, y desactivar un plugin no cambia el diseño.'
+  },
+  {
+    pregunta: '¿Dónde se gestionan los plugins en el escritorio de WordPress?',
+    opciones: [
+      'En Apariencia → Temas',
+      'En el menú Plugins del escritorio',
+      'En Ajustes → Identidad del sitio',
+      'En la pestaña del navegador'
+    ],
+    correcta: 1,
+    explicacion: 'El menú Plugins (wp-admin → Plugins) muestra los instalados, su estado (activo o inactivo) y permite activar, desactivar o borrar. Desde "Añadir nuevo plugin" se buscan e instalan otros nuevos.'
+  },
+  {
+    pregunta: '¿Qué diferencia hay entre instalar y activar un plugin?',
+    opciones: [
+      'Ninguna: al instalar ya queda funcionando',
+      'Instalar borra el contenido y activar lo recupera',
+      'Activar sirve solo para previsualizar el plugin',
+      'Instalar lo deja disponible; solo los plugins activos están funcionando en la web'
+    ],
+    correcta: 3,
+    explicacion: 'Igual que con los temas: instalar = tenerlo guardado; activar = ponerlo en marcha. Un plugin instalado pero inactivo no hace nada en la web. Conviene tener solo activos los plugins que de verdad uses.'
+  },
+  {
+    pregunta: '¿Qué diferencia hay entre desactivar un plugin y borrarlo?',
+    opciones: [
+      'Desactivar apaga su función pero conserva sus ajustes; borrar lo elimina definitivamente',
+      'Desactivar borra sus ajustes y borrar solo lo apaga',
+      'Son lo mismo con distinto nombre',
+      'Borrar un plugin desactiva también el tema'
+    ],
+    correcta: 0,
+    explicacion: 'Desactivar es como "apagar" el plugin: deja de funcionar, pero sigue instalado y conserva sus ajustes, por si lo vuelves a activar. Borrar lo elimina del WordPress. Antes de borrar un plugin, conviene estar seguro de que no lo vas a necesitar.'
+  },
+  {
+    pregunta: '¿Qué es Contact Form 7?',
+    opciones: [
+      'Un tema que da aspecto de web corporativa',
+      'El editor de formularios que trae WordPress de serie',
+      'Un servicio de hosting para formularios',
+      'Un plugin gratuito para crear y gestionar formularios de contacto'
+    ],
+    correcta: 3,
+    explicacion: 'Contact Form 7 (CF7) es uno de los plugins más populares de WordPress: gratuito y con millones de instalaciones activas. Permite crear formularios de contacto y colocarlos en cualquier página. WordPress de serie no trae formularios: hace falta un plugin como este.'
+  },
+  {
+    pregunta: '¿Qué es un shortcode?',
+    opciones: [
+      'Un código corto entre corchetes que, al pegarlo en una página, muestra un contenido (como un formulario)',
+      'La contraseña corta del administrador',
+      'Un comentario oculto en el código PHP del tema',
+      'Un tipo de entrada con fecha corta'
+    ],
+    correcta: 0,
+    explicacion: 'Los shortcodes son "atajos" entre corchetes, como [contact-form-7], que WordPress sustituye por contenido al cargar la página: un formulario, una galería, un botón... Contact Form 7 genera el shortcode de cada formulario para que lo pegues donde quieras.'
+  },
+  {
+    pregunta: '¿Cómo se coloca un formulario de Contact Form 7 dentro de una página?',
+    opciones: [
+      'Arrastrándolo desde el menú Plugins',
+      'Copiando su shortcode en la página (con el bloque de Shortcode o pegándolo en el contenido)',
+      'Se muestra automáticamente en todas las páginas',
+      'Solo se puede poner en la página de inicio'
+    ],
+    correcta: 1,
+    explicacion: 'Cada formulario de CF7 tiene su propio shortcode. Lo copias y lo pegas en la página donde quieras verlo (en Gutenberg existe un bloque llamado Shortcode). En cuanto la página se publica, el formulario aparece en ese sitio.'
+  },
+  {
+    pregunta: '¿Para qué sirve la pestaña "Formulario" de Contact Form 7?',
+    opciones: [
+      'Para elegir los colores y el diseño del formulario',
+      'Para configurar a qué correo llegan los mensajes',
+      'Para definir los campos que verá el usuario: nombre, correo, mensaje...',
+      'Para instalar el plugin en la web'
+    ],
+    correcta: 2,
+    explicacion: 'En la pestaña "Formulario" se construye el formulario con etiquetas (text, email, textarea, acceptance...): cada etiqueta genera un campo. Ahí se añaden campos, se hacen obligatorios o se eliminan.'
+  },
+  {
+    pregunta: '¿Para qué sirve la pestaña "Correo" (Mail) de Contact Form 7?',
+    opciones: [
+      'Para definir a qué dirección de correo llegan los mensajes del formulario',
+      'Para enviar publicidad a los usuarios registrados',
+      'Para crear cuentas de correo en el hosting',
+      'Para cambiar el asunto de las entradas del blog'
+    ],
+    correcta: 0,
+    explicacion: 'La pestaña "Correo" configura el destino: a qué correo llegan los mensajes, con qué asunto y con qué contenido (puedes usar los valores de los campos). También existe "Correo (2)", muy útil como respuesta automática para quien escribió.'
+  },
+  {
+    pregunta: 'En las etiquetas de Contact Form 7, ¿qué significa el asterisco (por ejemplo, text* o email*)?',
+    opciones: [
+      'Que el campo admite código HTML',
+      'Que el campo es obligatorio: no se puede enviar el formulario sin rellenarlo',
+      'Que el campo está oculto para el usuario',
+      'Que el campo solo admite números'
+    ],
+    correcta: 1,
+    explicacion: 'El asterisco marca los campos obligatorios (text* Nombre, email* Correo...). Si el usuario intenta enviar el formulario sin rellenarlos, CF7 muestra un aviso y no lo envía. Los campos sin asterisco son opcionales.'
+  },
+  {
+    pregunta: 'Por defecto, ¿dónde acaban los mensajes que la gente envía desde el formulario?',
+    opciones: [
+      'Se guardan en el escritorio de WordPress, junto a los comentarios',
+      'Se quedan en la papelera del formulario',
+      'Se envían al correo configurado; CF7 no los guarda en la base de datos',
+      'Desaparecen para siempre sin poder leerse'
+    ],
+    correcta: 2,
+    explicacion: 'Contact Form 7 envía los mensajes por correo, pero no los almacena en la base de datos. Si el envío falla, el mensaje se pierde: por eso conviene hacer una prueba de envío tras configurarlo (o añadir otro plugin que guarde los envíos).'
+  },
+  {
+    pregunta: 'Practicas con WordPress en XAMPP (en local). ¿Qué suele ocurrir al enviar un formulario de contacto?',
+    opciones: [
+      'El envío puede fallar, porque XAMPP no trae configurado el envío de correos',
+      'Todo funciona exactamente igual que en una web real publicada',
+      'El formulario no se puede insertar en una página local',
+      'Contact Form 7 no se puede instalar en local'
+    ],
+    correcta: 0,
+    explicacion: 'En un WordPress local (XAMPP) los formularios se crean, se insertan y se muestran bien, pero el envío real de correos suele fallar: el servidor de tu ordenador no está preparado para enviarlos. Para las prácticas basta con construir el formulario y configurarlo; el envío real se probará en un hosting.'
+  },
+  {
+    pregunta: '¿Por qué conviene instalar solo los plugins necesarios?',
+    opciones: [
+      'Porque cada plugin activo añade trabajo al servidor y puede ralentizar la web o abrir huecos de seguridad',
+      'Porque WordPress solo permite instalar diez plugins',
+      'Porque los plugins caducan a los 30 días',
+      'Porque los plugins inactivos cambian el diseño de la web'
+    ],
+    correcta: 0,
+    explicacion: 'Cada plugin activo carga código extra: si abundan, la web va más lenta y hay más superficie de ataque. Buena práctica: instala lo que necesites, desactiva o borra lo que no uses y desconfía de plugins sin actualizar o de fuentes dudosas.'
+  },
+  {
+    pregunta: '¿Por qué es importante mantener los plugins actualizados?',
+    opciones: [
+      'Porque las actualizaciones borran el contenido antiguo',
+      'Porque solo cambian los colores del escritorio',
+      'Porque los plugins viejos cambian de nombre',
+      'Porque corrigen fallos y vulnerabilidades de seguridad'
+    ],
+    correcta: 3,
+    explicacion: 'Las actualizaciones corrigen errores y agujeros de seguridad descubiertos después de publicar el plugin. Un plugin desactualizado es una de las puertas de entrada más habituales en webs hackeadas. En una web real, antes de actualizar conviene tener una copia de seguridad.'
+  }
+];
+
+/* ================= LÓGICA DEL QUIZ ================= */
+var LETRAS = ['A', 'B', 'C', 'D'];
+var preguntas = [], actual = 0, seleccionada = null, respuestas = [];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function iconoSvg(nombre) {
+  var rutas = {
+    'check': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>',
+    'cruz': '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+    'bombilla': '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+    'flecha': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
+  };
+  return '<svg class="marca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + rutas[nombre] + '</svg>';
+}
+
+function mezclar(lista) {
+  return lista.map(function (q) {
+    var idx = q.opciones.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    return { pregunta: q.pregunta, opciones: idx.map(function (i) { return q.opciones[i]; }), correcta: idx.indexOf(q.correcta), explicacion: q.explicacion };
+  });
+}
+
+function mostrar(nombre) {
+  ['inicio', 'pregunta', 'resultados'].forEach(function (s) {
+    $('pantalla-' + s).hidden = (s !== nombre);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function aciertos() {
+  var n = 0;
+  for (var i = 0; i < preguntas.length; i++) {
+    if (respuestas[i] !== undefined && respuestas[i] === preguntas[i].correcta) n++;
+  }
+  return n;
+}
+
+function pintarProgreso() {
+  var total = preguntas.length;
+  $('progreso-texto').innerHTML = 'Pregunta <span class="verde">' + (actual + 1) + '</span> de ' + total;
+  $('progreso-aciertos').textContent = aciertos() + ' aciertos hasta ahora';
+  $('etiqueta-numero').textContent = 'Pregunta ' + (actual + 1);
+  var pct = ((actual + (seleccionada !== null ? 1 : 0)) / total) * 100;
+  $('barra-relleno').style.width = pct + '%';
+  $('barra-relleno').setAttribute('aria-label', 'Progreso: pregunta ' + (actual + 1) + ' de ' + total);
+}
+
+function pintarPregunta() {
+  var q = preguntas[actual];
+  seleccionada = null;
+  $('texto-pregunta').textContent = q.pregunta;
+  $('grupo-opciones').innerHTML = q.opciones.map(function (op, i) {
+    return '<button type="button" class="opcion" data-i="' + i + '" onclick="seleccionar(' + i + ')">' +
+      '<span class="letra">' + LETRAS[i] + '</span>' +
+      '<span class="texto">' + esc(op) + '</span>' +
+      '</button>';
+  }).join('');
+  $('caja-feedback').hidden = true;
+  $('zona-siguiente').hidden = true;
+  pintarProgreso();
+}
+
+function empezar() {
+  preguntas = mezclar(PREGUNTAS);
+  actual = 0;
+  respuestas = [];
+  mostrar('pregunta');
+  pintarPregunta();
+}
+
+function seleccionar(i) {
+  if (seleccionada !== null) return;
+  seleccionada = i;
+  respuestas[actual] = i;
+  var q = preguntas[actual];
+  var botones = document.querySelectorAll('#grupo-opciones .opcion');
+  botones.forEach(function (b, idx) {
+    b.disabled = true;
+    if (idx === q.correcta) { b.classList.add('correcta'); b.insertAdjacentHTML('beforeend', iconoSvg('check')); }
+    else if (idx === i) { b.classList.add('fallada'); b.insertAdjacentHTML('beforeend', iconoSvg('cruz')); }
+    else { b.classList.add('apagada'); }
+  });
+  var ok = (i === q.correcta);
+  var caja = $('caja-feedback');
+  caja.className = 'feedback ' + (ok ? 'fb-ok' : 'fb-casi');
+  $('fb-icono').innerHTML = iconoSvg(ok ? 'check' : 'bombilla');
+  $('fb-titulo').textContent = ok ? '¡Correcto, muy bien!' : 'Casi. La respuesta correcta es la ' + LETRAS[q.correcta] + '.';
+  $('fb-texto').textContent = q.explicacion;
+  caja.hidden = false;
+  $('btn-siguiente').innerHTML = (actual === preguntas.length - 1 ? 'Ver mi resultado' : 'Siguiente pregunta') +
+    ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;margin-left:.5rem"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  $('zona-siguiente').hidden = false;
+  pintarProgreso();
+}
+
+function siguiente() {
+  if (actual === preguntas.length - 1) {
+    pintarResultados();
+    mostrar('resultados');
+  } else {
+    actual++;
+    pintarPregunta();
+  }
+}
+
+function mensajeResultado(pct) {
+  if (pct === 100) return { t: '¡Puntuación perfecta!', x: 'Has acertado todas las preguntas. Dominas los plugins y Contact Form 7: ya puedes añadir funciones nuevas a tu web.' };
+  if (pct >= 75) return { t: '¡Excelente trabajo!', x: 'Tienes muy claros los plugins y el funcionamiento de Contact Form 7. Repasa las preguntas falladas y estarás perfecto.' };
+  if (pct >= 50) return { t: '¡Buen trabajo!', x: 'Vas por buen camino. Lee con calma las explicaciones de este repaso y vuelve a intentarlo para subir la nota.' };
+  return { t: 'Sigue practicando', x: 'No te preocupes: lo importante es aprender. Revisa las explicaciones de abajo, practica con los plugins en tu XAMPP y vuelve a intentarlo.' };
+}
+
+function pintarResultados() {
+  var total = preguntas.length, ok = aciertos();
+  var pct = (ok / total) * 100;
+  var nota = (ok / total * 10).toFixed(1).replace('.', ',');
+  var m = mensajeResultado(pct);
+  $('res-titulo').textContent = m.t;
+  $('res-texto').textContent = m.x;
+  $('res-aciertos').textContent = ok;
+  $('res-total').textContent = '/ ' + total;
+  $('res-nota').textContent = nota;
+  $('lista-repaso').innerHTML = preguntas.map(function (q, i) {
+    var bien = (respuestas[i] === q.correcta);
+    return '<li class="repaso ' + (bien ? 'r-ok' : 'r-mal') + '">' +
+      '<div class="repaso-flex">' +
+      '<span class="repaso-icono">' + iconoSvg(bien ? 'check' : 'cruz') + '</span>' +
+      '<div style="min-width:0">' +
+      '<p class="repaso-pregunta">' + (i + 1) + '. ' + esc(q.pregunta) + '</p>' +
+      (bien ? '' : '<p class="repaso-correcta">Respuesta correcta: ' + esc(q.opciones[q.correcta]) + '</p>') +
+      '<p class="repaso-explicacion">' + esc(q.explicacion) + '</p>' +
+      '</div></div></li>';
+  }).join('');
+}
+</script>
+</body>
+</html>
