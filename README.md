@@ -8,9 +8,9 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 | --- | ---: | ---: |
 | Fundamentos web | 3 | 52 |
 | WordPress | 7 | 120 |
-| WooCommerce | 4 | 78 |
+| WooCommerce | 5 | 98 |
 | Despliegue | 1 | 15 |
-| **Total** | **15** | **265** |
+| **Total** | **16** | **285** |
 
 ### Fundamentos web
 - Conceptos fundamentales de la Web
@@ -31,6 +31,7 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 - Pedidos y logística en WooCommerce
 - Pagos e impuestos en WooCommerce
 - Marketing básico en WooCommerce
+- Legal, RGPD y facturación básica
 
 ### Despliegue
 - FTP y FileZilla
