@@ -9,9 +9,9 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 | Fundamentos web | 3 | 52 |
 | WordPress | 7 | 120 |
 | WooCommerce | 5 | 98 |
-| Despliegue | 1 | 15 |
+| Despliegue | 2 | 35 |
 | SEO | 1 | 20 |
-| **Total** | **17** | **305** |
+| **Total** | **18** | **325** |
 
 ### Fundamentos web
 - Conceptos fundamentales de la Web
@@ -36,8 +36,7 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 
 ### Despliegue
 - FTP y FileZilla
-- Próximamente: Publicar en Netlify
-- Próximamente: Publicar en GitHub Pages
+- Git, GitHub Pages y Netlify
 
 ### SEO
 - Conceptos básicos de SEO
