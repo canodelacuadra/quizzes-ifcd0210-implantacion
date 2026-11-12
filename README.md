@@ -11,7 +11,8 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 | WooCommerce | 5 | 98 |
 | Despliegue | 2 | 35 |
 | SEO | 1 | 20 |
-| **Total** | **18** | **325** |
+| Flujo de trabajo | 2 | 40 |
+| **Total** | **20** | **365** |
 
 ### Fundamentos web
 - Conceptos fundamentales de la Web
@@ -41,7 +42,11 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 ### SEO
 - Conceptos básicos de SEO
 
-Próximos temas previstos: SEO en páginas estáticas, SEO en WordPress (SSR), SEO para redes sociales y SEO en WooCommerce.
+### Flujo de trabajo
+- Git para desarrollo web
+- Agentes de IA en el desarrollo web
+
+Próximos temas previstos: SEO en páginas estáticas, SEO en WordPress (SSR), SEO para redes sociales y SEO en WooCommerce. En flujo de trabajo: CI/CD, GitHub Actions y Docker.
 
 ## Estructura del proyecto
 
@@ -57,12 +62,15 @@ Próximos temas previstos: SEO en páginas estáticas, SEO en WordPress (SSR), S
 ├── despliegue/           # Quizzes de despliegue
 │   ├── assets/
 │   └── datos/
-└── seo/                  # Quizzes de SEO
+├── seo/                  # Quizzes de SEO
+│   ├── assets/
+│   └── datos/
+└── flujo-trabajo/        # Git y agentes de IA
     ├── assets/
     └── datos/
 ```
 
-Los quizzes de **Fundamentos**, **Despliegue** y **SEO** usan un motor compartido (`assets/quiz.css` y `assets/quiz.js`) y cargan las preguntas desde archivos de `datos/`. Los quizzes de **WordPress** y **WooCommerce** son páginas HTML autocontenidas.
+Los quizzes de **Fundamentos**, **Despliegue**, **SEO** y **Flujo de trabajo** usan un motor compartido (`assets/quiz.css` y `assets/quiz.js`) y cargan las preguntas desde archivos de `datos/`. Los quizzes de **WordPress** y **WooCommerce** son páginas HTML autocontenidas.
 
 ## Cómo usarlo
 

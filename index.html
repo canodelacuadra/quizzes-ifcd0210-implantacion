@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quizzes IFCD0210 · Implantación de aplicaciones web</title>
-<meta name="description" content="Quizzes interactivos de autoevaluación del módulo de implantación de aplicaciones web (IFCD0210): fundamentos de la Web, WordPress, WooCommerce, despliegue con FTP, FileZilla, Git, GitHub Pages y Netlify, y SEO. Preguntas tipo test con feedback inmediato.">
+<meta name="description" content="Quizzes interactivos de autoevaluación del módulo de implantación de aplicaciones web (IFCD0210): fundamentos de la Web, WordPress, WooCommerce, despliegue con FTP, FileZilla, Git, GitHub Pages y Netlify, SEO y flujo de trabajo con agentes de IA. Preguntas tipo test con feedback inmediato.">
 <meta name="theme-color" content="#2563eb">
 <style>
 :root{
@@ -12,6 +12,7 @@
   --s50:#f8fafc;--s100:#f1f5f9;--s200:#e2e8f0;--s300:#cbd5e1;--s400:#94a3b8;--s500:#64748b;--s600:#475569;--s700:#334155;--s800:#1e293b;--s900:#0f172a;
   --a50:#fffbeb;--a200:#fde68a;--a500:#f59e0b;--a700:#b45309;
   --c50:#ecfeff;--c100:#cffafe;--c300:#67e8f9;--c600:#0891b2;--c700:#0e7490;
+  --g50:#ecfdf5;--g100:#d1fae5;--g300:#6ee7b7;--g600:#059669;--g700:#047857;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--s900);background:#fff;-webkit-font-smoothing:antialiased}
@@ -63,6 +64,12 @@ h1 .acento{color:var(--b600)}
 .quiz--seo .quiz-pie span{color:var(--c700)}
 .quiz--seo .flecha{background:var(--c600)}
 .quiz--seo:hover{border-color:var(--c300)}
+.quiz--flujo::before{background:linear-gradient(90deg,var(--g600),var(--g700))}
+.quiz--flujo .icono-quiz{background:var(--g50);color:var(--g700);border-color:var(--g100)}
+.quiz--flujo .etiqueta-azul{background:var(--g50);color:var(--g700)}
+.quiz--flujo .quiz-pie span{color:var(--g700)}
+.quiz--flujo .flecha{background:var(--g600)}
+.quiz--flujo:hover{border-color:var(--g300)}
 .nota{max-width:52rem;margin:2rem auto 0;border:1px solid var(--b100);background:rgba(239,246,255,.65);border-radius:1rem;padding:1rem 1.1rem;display:flex;gap:.75rem;align-items:flex-start}
 .nota svg{flex:0 0 auto;width:1.1rem;height:1.1rem;color:var(--b600);margin-top:.1rem}
 .nota p{font-size:.82rem;line-height:1.55;color:var(--s600)}
@@ -102,11 +109,11 @@ h1 .acento{color:var(--b600)}
     <section class="hero" aria-labelledby="titulo-principal">
       <p class="ceja">IFCD0210 · Módulo de implantación de aplicaciones web</p>
       <h1 id="titulo-principal">Pon a prueba lo que sabes de <span class="acento">implantación web</span></h1>
-      <p class="intro">Quizzes breves para repasar los fundamentos de la Web, WordPress, WooCommerce, el despliegue de aplicaciones y SEO. Sin instalar nada y con la explicación de cada respuesta.</p>
+      <p class="intro">Quizzes breves para repasar los fundamentos de la Web, WordPress, WooCommerce, el despliegue de aplicaciones, SEO y el flujo de trabajo con Git e IA. Sin instalar nada y con la explicación de cada respuesta.</p>
       <div class="estadisticas" aria-label="Resumen de los quizzes">
-        <div class="estadistica"><strong>5</strong><span>secciones</span></div>
-        <div class="estadistica"><strong>18</strong><span>quizzes disponibles</span></div>
-        <div class="estadistica"><strong>325</strong><span>preguntas tipo test</span></div>
+        <div class="estadistica"><strong>6</strong><span>secciones</span></div>
+        <div class="estadistica"><strong>20</strong><span>quizzes disponibles</span></div>
+        <div class="estadistica"><strong>365</strong><span>preguntas tipo test</span></div>
       </div>
     </section>
 
@@ -222,6 +229,29 @@ h1 .acento{color:var(--b600)}
           </div>
           <div class="quiz-pie">
             <span>Entrar en SEO</span>
+            <span class="flecha" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="quiz quiz--flujo" href="flujo-trabajo/index.html">
+          <div class="quiz-cabecera">
+            <span class="icono-quiz" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+            </span>
+            <div>
+              <h3>Herramientas y flujo de trabajo</h3>
+              <p>Git para el control de versiones y agentes de IA para programar con contexto, permisos y revisión.</p>
+            </div>
+          </div>
+          <div class="etiquetas">
+            <span class="etiqueta etiqueta-azul">2 quizzes</span>
+            <span class="etiqueta">40 preguntas</span>
+            <span class="etiqueta">Flujo de trabajo</span>
+          </div>
+          <div class="quiz-pie">
+            <span>Entrar en Flujo de trabajo</span>
             <span class="flecha" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </span>
