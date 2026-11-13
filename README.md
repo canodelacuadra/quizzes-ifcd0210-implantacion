@@ -10,9 +10,9 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 | WordPress | 7 | 120 |
 | WooCommerce | 5 | 98 |
 | Despliegue | 2 | 35 |
-| SEO | 1 | 20 |
+| SEO | 4 | 80 |
 | Flujo de trabajo | 2 | 40 |
-| **Total** | **20** | **365** |
+| **Total** | **23** | **425** |
 
 ### Fundamentos web
 - Conceptos fundamentales de la Web
@@ -41,12 +41,15 @@ Colección de quizzes interactivos de autoevaluación para el módulo de **impla
 
 ### SEO
 - Conceptos básicos de SEO
+- SEO básico en una página estática
+- SEO avanzado en una página estática
+- SEO en WordPress y WooCommerce
 
 ### Flujo de trabajo
 - Git para desarrollo web
 - Agentes de IA en el desarrollo web
 
-Próximos temas previstos: SEO en páginas estáticas, SEO en WordPress (SSR), SEO para redes sociales y SEO en WooCommerce. En flujo de trabajo: CI/CD, GitHub Actions y Docker.
+Próximos temas previstos: SEO para redes sociales y analítica web. En flujo de trabajo: CI/CD, GitHub Actions y Docker.
 
 ## Estructura del proyecto
 
